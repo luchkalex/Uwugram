@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="circle_avatar_style">
+        <item name="android:layout_width">@dimen/default_user_photo_size</item>
+        <item name="android:layout_height">@dimen/default_user_photo_size</item>
+        <item name="android:layout_marginStart">@dimen/default_horizontal_margin</item>
+    </style>
+
+    <style name="list_menu_header_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/default_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/default_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/default_vertical_margin</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="settings_user_data_list_tile_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/settings_account_data_tile_height</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/ripple_effect</item>
+
+    </style>
+
+    <style name="normal_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/default_horizontal_margin</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:textColor">@color/colorNormalText</item>
+    </style>
+
+    <style name="faded_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textColor">@color/colorFadedText</item>
+    </style>
+
+    <style name="separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorFadedAccent</item>
+        <item name="android:layout_marginStart">@dimen/default_horizontal_margin</item>
+    </style>
+
+
+
+</resources>
