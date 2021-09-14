@@ -50,5 +50,9 @@
     </style>
 
 
+    <style name="actionMenu" parent="MaterialDrawerTheme.Light">
+        <item name="background">@color/colorAccent</item>
+        <item name="actionMenuTextColor">@color/colorPrimary</item>
+    </style>
 
 </resources>
