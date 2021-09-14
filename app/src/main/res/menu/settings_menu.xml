@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/settings_menu_edit_name"
+        android:title="@string/settings_menu_edit_name"
+        android:icon="@drawable/ic_baseline_edit_24"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/settings_menu_logout"
+        android:title="@string/settings_menu_logout"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/settings_menu_change_photo"
+        android:title="@string/settings_menu_change_photo"
+        android:icon="@drawable/ic_baseline_add_a_photo_24"
+        app:showAsAction="never"/>
+</menu>
