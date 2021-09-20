@@ -9,12 +9,9 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentCodeVerificationBinding
-import com.uwugram.utils.AUTH
-import com.uwugram.utils.AppTextWatcher
-import com.uwugram.utils.replaceActivity
-import com.uwugram.utils.showShortToast
+import com.uwugram.utils.*
 
-class CodeVerificationFragment(val id: String) : Fragment() {
+class CodeVerificationFragment(val id: String, val phoneNumber: String) : Fragment() {
 
     private var _binding: FragmentCodeVerificationBinding? = null
     private val binding get() = _binding!!
@@ -39,10 +36,22 @@ class CodeVerificationFragment(val id: String) : Fragment() {
     private fun onEnterCode() {
         val code = binding.verificationCodeInputField.text.toString()
         val credential = PhoneAuthProvider.getCredential(id, code)
-        AUTH.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful)
-                (activity as LoginActivity).replaceActivity(MainActivity())
-            else {
+        AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val dataMap = mutableMapOf<String, Any>()
+                val uid = AUTH.currentUser?.uid.toString()
+                dataMap[FIELD_USERS_ID] = uid
+                dataMap[FIELD_USERS_PHONE] = phoneNumber
+                dataMap[FIELD_USERS_USERNAME] = uid
+                REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            (activity as LoginActivity).replaceActivity(MainActivity())
+                        } else {
+                            showShortToast(it.exception?.message.toString())
+                        }
+                    }
+            } else {
                 showShortToast("Wrong code")
                 binding.verificationCodeInputField.setText("")
             }

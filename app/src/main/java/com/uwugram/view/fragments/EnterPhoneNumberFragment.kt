@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.R
 import com.uwugram.databinding.FragmentEnterPhoneNumberBinding
+import com.uwugram.utils.AUTH
+import com.uwugram.utils.initFirebase
 import com.uwugram.utils.replaceFragment
 import com.uwugram.utils.showShortToast
 import java.util.concurrent.TimeUnit
@@ -32,7 +35,7 @@ class EnterPhoneNumberFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        initFirebase()
         callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
 
@@ -45,7 +48,7 @@ class EnterPhoneNumberFragment : Fragment() {
             override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
                 replaceFragment(
                     R.id.loginFragmentContainer,
-                    CodeVerificationFragment(id)
+                    CodeVerificationFragment(id, phoneNumber)
                 )
             }
         }
@@ -64,12 +67,13 @@ class EnterPhoneNumberFragment : Fragment() {
 
     private fun authUser() {
         activity?.let {
-            PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNumber,
-                60,
-                TimeUnit.SECONDS,
-                it,
-                callback,
+            PhoneAuthProvider.verifyPhoneNumber(
+                PhoneAuthOptions.newBuilder(AUTH)
+                    .setPhoneNumber(phoneNumber)
+                    .setTimeout(60, TimeUnit.SECONDS)
+                    .setActivity(it)
+                    .setCallbacks(callback)
+                    .build()
             )
         }
     }
