@@ -15,10 +15,14 @@ fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
     this.finish()
 }
 
-fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fragment) {
-    supportFragmentManager.beginTransaction()
-        .addToBackStack(null)
-        .replace(containerViewId, fragment).commit()
+fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fragment, addToBackStack: Boolean = true) {
+    val fragmentTransaction = supportFragmentManager.beginTransaction()
+        .replace(containerViewId, fragment)
+
+    if (addToBackStack)
+        fragmentTransaction.addToBackStack(null)
+
+    fragmentTransaction.commit()
 }
 
 fun Fragment.replaceFragment(containerViewId: Int, fragment: Fragment) {
