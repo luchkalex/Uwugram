@@ -1,10 +1,25 @@
 package com.uwugram.view.fragments
 
-import android.view.Menu
-import android.view.MenuInflater
+import android.os.Bundle
+import android.view.*
+import androidx.fragment.app.Fragment
 import com.uwugram.R
+import com.uwugram.databinding.FragmentSettingsBinding
 
-class SettingsFragment : AbstractFragment(R.layout.fragment_settings){
+class SettingsFragment : Fragment() {
+
+    private var _binding: FragmentSettingsBinding? = null
+
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onResume() {
         super.onResume()
