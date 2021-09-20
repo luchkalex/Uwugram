@@ -56,7 +56,6 @@
                 android:id="@+id/phoneNumberInputField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/verification_code_input_field_hint"
                 android:inputType="phone"
                 android:maxLength="9"
                 android:maxLines="1"
