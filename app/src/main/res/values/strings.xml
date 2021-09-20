@@ -21,5 +21,15 @@
     <string name="settings_menu_edit_name">Edit name</string>
     <string name="settings_menu_logout">Log out</string>
     <string name="settings_menu_change_photo">Set new photo</string>
+    <string name="confirm_floating_button_description">Confirm</string>
+    <string name="login_title_your_phone">Your phone</string>
+    <string name="enter_phone_number_fragment_help_text">Please confirm your country code and enter your phone number.</string>
+    <string name="default_country_title">Country</string>
+    <string name="phone_number_hint_text">--  --  --  --  --  --  --  --  --</string>
+    <string name="hint_text_verification_code">Please enter verification code</string>
+    <string name="hint_text_verification_code2">We sent SMS with code on your phone number</string>
+    <string name="verification_code_input_field_hint">-- -- -- -- -- --</string>
+    <string name="default_ukraine_country_code">+380</string>
+    <string name="phone_text">Phone</string>
 
 </resources>

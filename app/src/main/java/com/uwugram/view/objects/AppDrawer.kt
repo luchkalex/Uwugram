@@ -13,6 +13,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.uwugram.R
+import com.uwugram.utils.replaceFragment
 import com.uwugram.view.fragments.SettingsFragment
 
 class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
@@ -49,10 +50,8 @@ class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    when (position){
-                        5 -> activity.supportFragmentManager.beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.fragmentContainer, SettingsFragment()).commit()
+                    when (position) {
+                        5 -> activity.replaceFragment(R.id.fragmentContainer, SettingsFragment())
                     }
                     return false
                 }
