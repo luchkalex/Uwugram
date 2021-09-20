@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -16,16 +17,36 @@ import com.uwugram.R
 import com.uwugram.utils.replaceFragment
 import com.uwugram.view.fragments.SettingsFragment
 
-class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
+class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
 
     private lateinit var drawer: Drawer
     private var primaryDrawerItemID = 0L
     private lateinit var header: AccountHeader
+    private var drawerLayout: DrawerLayout
 
     init {
         println("WARNINGINIT")
         createHeader()
         createDrawer()
+        drawerLayout = drawer.drawerLayout
+    }
+
+    fun disableDrawer() {
+        drawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        toolbar.setNavigationOnClickListener {
+            activity.supportFragmentManager.popBackStack()
+        }
+    }
+
+    fun enableDrawer() {
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        drawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        toolbar.setNavigationOnClickListener {
+            drawer.openDrawer()
+        }
     }
 
     private fun createDrawer() {

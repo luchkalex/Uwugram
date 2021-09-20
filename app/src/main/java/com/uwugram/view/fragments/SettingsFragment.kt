@@ -2,7 +2,6 @@ package com.uwugram.view.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
@@ -10,7 +9,7 @@ import com.uwugram.databinding.FragmentSettingsBinding
 import com.uwugram.utils.AUTH
 import com.uwugram.utils.replaceActivity
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
     private var _binding: FragmentSettingsBinding? = null
 
