@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "997211902576",
+    "project_id": "uwugram-3acbf",
+    "storage_bucket": "uwugram-3acbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997211902576:android:18b844bc485e2c035e5ab5",
+        "android_client_info": {
+          "package_name": "com.uwugram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997211902576-aaarmhr4oa7hu801ctdmqp6hkg7hetdm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY6ZE4pQTphAuB5DfHb8z2ooxs17Zxjzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997211902576-aaarmhr4oa7hu801ctdmqp6hkg7hetdm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

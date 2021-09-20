@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.PhoneAuthProvider
+import com.uwugram.activities.LoginActivity
+import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentCodeVerificationBinding
+import com.uwugram.utils.AUTH
 import com.uwugram.utils.AppTextWatcher
+import com.uwugram.utils.replaceActivity
 import com.uwugram.utils.showShortToast
 
-class CodeVerificationFragment : Fragment() {
+class CodeVerificationFragment(val id: String) : Fragment() {
 
     private var _binding: FragmentCodeVerificationBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,11 +32,20 @@ class CodeVerificationFragment : Fragment() {
         super.onStart()
         binding.verificationCodeInputField.addTextChangedListener(AppTextWatcher {
             if (binding.verificationCodeInputField.text.toString().length == 6)
-                verifyCode()
+                onEnterCode()
         })
     }
 
-    private fun verifyCode() {
-        showShortToast("Code verification")
+    private fun onEnterCode() {
+        val code = binding.verificationCodeInputField.text.toString()
+        val credential = PhoneAuthProvider.getCredential(id, code)
+        AUTH.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful)
+                (activity as LoginActivity).replaceActivity(MainActivity())
+            else {
+                showShortToast("Wrong code")
+                binding.verificationCodeInputField.setText("")
+            }
+        }
     }
 }

@@ -9,6 +9,9 @@ import com.uwugram.utils.replaceActivity
 import com.uwugram.utils.replaceFragment
 import com.uwugram.view.objects.AppDrawer
 import com.uwugram.view.fragments.ChatFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.uwugram.utils.AUTH
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,12 +19,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var appDrawer: AppDrawer
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AUTH = FirebaseAuth.getInstance()
     }
 
     override fun onStart() {
@@ -30,11 +32,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initialize() {
-        if (false) {
+        if (AUTH.currentUser != null) {
             toolbar = binding.mainToolbar
             setSupportActionBar(toolbar)
             appDrawer = AppDrawer(this, toolbar)
-            replaceFragment(R.id.fragmentContainer, ChatFragment())
+            replaceFragment(R.id.fragmentContainer, ChatFragment(), false)
         } else {
             replaceActivity(LoginActivity())
         }
