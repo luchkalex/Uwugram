@@ -7,7 +7,9 @@ import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentSettingsBinding
 import com.uwugram.utils.AUTH
+import com.uwugram.utils.USER
 import com.uwugram.utils.replaceActivity
+import com.uwugram.utils.replaceFragment
 
 class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
@@ -24,9 +26,17 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         setHasOptionsMenu(true)
+        activity?.title = "Settings"
+        binding.settingsFullName.text = USER.fullName
+        binding.activeStatus.text = USER.status
+        binding.userPhoneNumber.text = USER.phone
+        if (USER.bio.isNotEmpty())
+            binding.bio.text = USER.bio
+        if (USER.username.isNotEmpty())
+            binding.username.text = getString(R.string.username_placeholder, USER.username)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -36,6 +46,9 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.settings_menu_edit_name -> {
+                replaceFragment(R.id.fragmentContainer, EditNameFragment())
+            }
             R.id.settings_menu_logout -> {
                 AUTH.signOut()
                 (activity as MainActivity).replaceActivity(LoginActivity())

@@ -31,5 +31,8 @@
     <string name="verification_code_input_field_hint">-- -- -- -- -- --</string>
     <string name="default_ukraine_country_code">+380</string>
     <string name="phone_text">Phone</string>
+    <string name="first_name_hint_text">First name (required)</string>
+    <string name="last_name_hint_text">Last name (optional)</string>
+    <string name="username_placeholder">\@%1$s</string>
 
 </resources>

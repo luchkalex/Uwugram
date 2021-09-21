@@ -80,13 +80,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/confirmFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:backgroundTint="@color/colorPrimary"
-        android:clickable="true"
+        style="@style/bottom_fab_style"
         android:contentDescription="@string/confirm_floating_button_description"
-        android:focusable="true"
         android:src="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

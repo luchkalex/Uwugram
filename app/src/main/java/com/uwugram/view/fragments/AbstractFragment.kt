@@ -12,5 +12,6 @@ abstract class AbstractFragment(layout: Int) : Fragment(layout) {
     override fun onStop() {
         super.onStop()
         (activity as MainActivity).appDrawer.enableDrawer()
+        activity?.title = "Uwugram"
     }
 }

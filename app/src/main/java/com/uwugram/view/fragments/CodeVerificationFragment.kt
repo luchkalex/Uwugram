@@ -11,7 +11,7 @@ import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentCodeVerificationBinding
 import com.uwugram.utils.*
 
-class CodeVerificationFragment(val id: String, val phoneNumber: String) : Fragment() {
+class CodeVerificationFragment(val id: String, private val phoneNumber: String) : Fragment() {
 
     private var _binding: FragmentCodeVerificationBinding? = null
     private val binding get() = _binding!!
@@ -42,7 +42,11 @@ class CodeVerificationFragment(val id: String, val phoneNumber: String) : Fragme
                 val uid = AUTH.currentUser?.uid.toString()
                 dataMap[FIELD_USERS_ID] = uid
                 dataMap[FIELD_USERS_PHONE] = phoneNumber
-                dataMap[FIELD_USERS_USERNAME] = uid
+                dataMap[FIELD_USERS_USERNAME] = ""
+                dataMap[FIELD_USERS_FULLNAME] = "UWU "
+                dataMap[FIELD_USERS_BIO] = ""
+                dataMap[FIELD_USERS_STATUS] = "online"
+                dataMap[FIELD_USERS_PHOTO_URL] = ""
                 REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {

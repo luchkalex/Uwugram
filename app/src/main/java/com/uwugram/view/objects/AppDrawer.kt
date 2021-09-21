@@ -14,18 +14,17 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.uwugram.R
-import com.uwugram.utils.replaceFragment
+import com.uwugram.utils.*
 import com.uwugram.view.fragments.SettingsFragment
 
 class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
 
     private lateinit var drawer: Drawer
-    private var primaryDrawerItemID = 0L
     private lateinit var header: AccountHeader
+    private var primaryDrawerItemID = 0L
     private var drawerLayout: DrawerLayout
 
     init {
-        println("WARNINGINIT")
         createHeader()
         createDrawer()
         drawerLayout = drawer.drawerLayout
@@ -95,8 +94,8 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
                 ProfileDrawerItem()
-                    .withName("Name")
-                    .withEmail("Email")
+                    .withName(USER.fullName)
+                    .withEmail(USER.phone)
             ).build()
     }
 }

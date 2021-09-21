@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/defaultNameLabel"
+            android:id="@+id/settings_fullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_horizontal_margin"
@@ -47,7 +47,7 @@
             android:textSize="@dimen/normal_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profileImage"
-            app:layout_constraintTop_toBottomOf="@+id/defaultNameLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/settings_fullName" />
 
         <View
             android:layout_width="wrap_content"
@@ -168,14 +168,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
+        android:clickable="true"
         android:contentDescription="@string/change_photo_content_description"
+        android:focusable="true"
         android:src="@drawable/ic_baseline_add_a_photo_24"
-        app:fabSize="normal"
         android:tint="@color/colorPrimary"
-        app:rippleColor="@color/colorAccentDark"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="@+id/settingsHeaderBlock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsHeaderBlock"
-        android:focusable="true"
-        android:clickable="true" />
+        app:rippleColor="@color/colorAccentDark" />
 </androidx.constraintlayout.widget.ConstraintLayout>
