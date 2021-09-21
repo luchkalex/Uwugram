@@ -16,11 +16,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editNameInputLayout"
+            android:id="@+id/edit_name_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_name_hint_text"
+            android:hint="@string/edit_name_first_name_hint_text"
             android:textColorHint="@color/colorFadedText"
             app:boxStrokeColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,17 +35,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editSurnameInputLayout"
+            android:id="@+id/edit_surname_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_vertical_margin"
-            android:hint="@string/last_name_hint_text"
+            android:hint="@string/edit_name_last_name_hint_text"
             android:textColorHint="@color/colorFadedText"
             app:boxStrokeColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editNameInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/edit_name_input_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSurnameInputField"
@@ -57,9 +57,9 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/confirmFab"
+        android:id="@+id/editNameConfirmFab"
         style="@style/bottom_fab_style"
-        android:contentDescription="@string/confirm_floating_button_description"
+        android:contentDescription="@string/edit_name_fab_cd"
         android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

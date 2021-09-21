@@ -7,7 +7,7 @@
     tools:context=".view.fragments.SettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settingsHeaderBlock"
+        android:id="@+id/settings_header_block"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_header_height"
         android:background="@color/colorPrimary"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage"
+            android:id="@+id/settingsProfileImage"
             style="@style/circle_avatar_style"
             android:src="@drawable/default_avatar"
             app:civ_border_width="@dimen/zero_size"
@@ -25,16 +25,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/settings_fullName"
+            android:id="@+id/settingsFullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_horizontal_margin"
-            android:text="@string/default_username"
+            tools:text="@string/settings_default_username_text"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/large_text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/activeStatus"
-            app:layout_constraintLeft_toRightOf="@+id/profileImage"
+            app:layout_constraintLeft_toRightOf="@+id/settingsProfileImage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -42,12 +42,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_horizontal_margin"
-            android:text="@string/active_status"
+            tools:text="@string/settings_default_active_status"
             android:textColor="@color/colorAccentDark"
             android:textSize="@dimen/normal_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profileImage"
-            app:layout_constraintTop_toBottomOf="@+id/settings_fullName" />
+            app:layout_constraintStart_toEndOf="@+id/settingsProfileImage"
+            app:layout_constraintTop_toBottomOf="@+id/settingsFullName" />
 
         <View
             android:layout_width="wrap_content"
@@ -61,39 +61,39 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/profileInfoBlock"
+        android:id="@+id/profile_info_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/settingsHeaderBlock">
+        app:layout_constraintTop_toBottomOf="@id/settings_header_block">
 
         <TextView
-            android:id="@+id/settingsAccount"
-            style="@style/list_menu_header_title_style"
+            android:id="@+id/settings_account_label"
+            style="@style/settings_header_text_style"
             android:text="@string/setting_account_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/profileInfoBlock" />
+            app:layout_constraintTop_toTopOf="@id/profile_info_block" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/phone_tile"
+            android:id="@+id/settings_phone_tile"
             style="@style/settings_user_data_list_tile_style"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settingsAccount">
+            app:layout_constraintTop_toBottomOf="@id/settings_account_label">
 
             <TextView
-                android:id="@+id/user_phone_number"
+                android:id="@+id/settings_phone_text"
                 style="@style/normal_text_style"
-                android:text="@string/default_phone_number"
-                app:layout_constraintBottom_toTopOf="@+id/hint_text_phone_number"
+                tools:text="@string/settings_default_phone_number"
+                app:layout_constraintBottom_toTopOf="@+id/settings_phone_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/hint_text_phone_number"
+                android:id="@+id/settings_phone_helper_text"
                 style="@style/faded_text_style"
-                android:text="@string/phone_hint_text"
+                android:text="@string/settings_phone_helper_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/user_phone_number"
-                app:layout_constraintTop_toBottomOf="@+id/user_phone_number" />
+                app:layout_constraintStart_toStartOf="@+id/settings_phone_text"
+                app:layout_constraintTop_toBottomOf="@+id/settings_phone_text" />
 
             <View
                 style="@style/separator"
@@ -103,26 +103,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/username_tile"
+            android:id="@+id/settings_username_tile"
             style="@style/settings_user_data_list_tile_style"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phone_tile">
+            app:layout_constraintTop_toBottomOf="@id/settings_phone_tile">
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/settings_username_text"
                 style="@style/normal_text_style"
-                android:text="@string/default_username"
-                app:layout_constraintBottom_toTopOf="@+id/hint_text_username"
+                tools:text="@string/settings_default_username_text"
+                app:layout_constraintBottom_toTopOf="@+id/settings_username_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/hint_text_username"
+                android:id="@+id/settings_username_helper_text"
                 style="@style/faded_text_style"
-                android:text="@string/username_hint_text"
+                android:text="@string/settings_username_helper_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/username"
-                app:layout_constraintTop_toBottomOf="@+id/username" />
+                app:layout_constraintStart_toStartOf="@+id/settings_username_text"
+                app:layout_constraintTop_toBottomOf="@+id/settings_username_text" />
 
             <View
                 style="@style/separator"
@@ -132,26 +132,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bio_tile"
+            android:id="@+id/settings_bio_tile"
             style="@style/settings_user_data_list_tile_style"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/username_tile">
+            app:layout_constraintTop_toBottomOf="@id/settings_username_tile">
 
             <TextView
-                android:id="@+id/bio"
+                android:id="@+id/settings_bio_text"
                 style="@style/normal_text_style"
-                android:text="@string/default_bio"
-                app:layout_constraintBottom_toTopOf="@+id/hint_text_bio"
+                tools:text="@string/settings_default_bio_text"
+                app:layout_constraintBottom_toTopOf="@+id/settings_bio_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/hint_text_bio"
+                android:id="@+id/settings_bio_helper_text"
                 style="@style/faded_text_style"
-                android:text="@string/hint_text_bio"
+                android:text="@string/settings_bio_helper_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/bio"
-                app:layout_constraintTop_toBottomOf="@+id/bio" />
+                app:layout_constraintStart_toStartOf="@+id/settings_bio_text"
+                app:layout_constraintTop_toBottomOf="@+id/settings_bio_text" />
 
             <View
                 style="@style/separator"
@@ -163,19 +163,19 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/settings_edit_photo_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:contentDescription="@string/change_photo_content_description"
+        android:contentDescription="@string/settings_change_photo_fab_cd"
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_a_photo_24"
         android:tint="@color/colorPrimary"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/settingsHeaderBlock"
+        app:layout_constraintBottom_toBottomOf="@+id/settings_header_block"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsHeaderBlock"
+        app:layout_constraintTop_toBottomOf="@+id/settings_header_block"
         app:rippleColor="@color/colorAccentDark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

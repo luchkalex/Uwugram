@@ -27,14 +27,14 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
 
     override fun onStart() {
         super.onStart()
-        binding.verificationCodeInputField.addTextChangedListener(AppTextWatcher {
-            if (binding.verificationCodeInputField.text.toString().length == 6)
+        binding.codeVerificationInputField.addTextChangedListener(AppTextWatcher {
+            if (binding.codeVerificationInputField.text.toString().length == 6)
                 onEnterCode()
         })
     }
 
     private fun onEnterCode() {
-        val code = binding.verificationCodeInputField.text.toString()
+        val code = binding.codeVerificationInputField.text.toString()
         val credential = PhoneAuthProvider.getCredential(id, code)
         AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -57,7 +57,7 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
                     }
             } else {
                 showShortToast("Wrong code")
-                binding.verificationCodeInputField.setText("")
+                binding.codeVerificationInputField.setText("")
             }
         }
     }

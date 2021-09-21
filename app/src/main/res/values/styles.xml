@@ -7,7 +7,7 @@
         <item name="android:layout_marginStart">@dimen/default_horizontal_margin</item>
     </style>
 
-    <style name="list_menu_header_title_style">
+    <style name="settings_header_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/default_horizontal_margin</item>

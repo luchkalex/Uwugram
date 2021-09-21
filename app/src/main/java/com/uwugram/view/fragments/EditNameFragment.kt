@@ -24,11 +24,11 @@ class EditNameFragment : AbstractFragment(R.layout.fragment_edit_name) {
 
     override fun onStart() {
         super.onStart()
-        activity?.title = "Edit name"
+        activity?.title = getString(R.string.edit_name_activity_title)
         val fullNameList = USER.fullName.split(" ")
         binding.editNameInputField.setText(fullNameList[0])
         binding.editSurnameInputField.setText(fullNameList[1])
-        binding.confirmFab.setOnClickListener { updateName() }
+        binding.editNameConfirmFab.setOnClickListener { updateName() }
     }
 
     private fun updateName() {

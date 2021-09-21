@@ -52,12 +52,12 @@ class EnterPhoneNumberFragment : Fragment() {
                 )
             }
         }
-        binding.confirmFab.setOnClickListener { sendCode() }
+        binding.enterPhoneConfirmFab.setOnClickListener { sendCode() }
     }
 
     private fun sendCode() {
         phoneNumber =
-            getString(R.string.default_ukraine_country_code) + binding.phoneNumberInputField.text.toString()
+            getString(R.string.enter_phone_default_ukraine_country_code) + binding.enterPhoneInputField.text.toString()
         if (phoneNumber.length < 9) {
             showShortToast("Enter phone number")
         } else {

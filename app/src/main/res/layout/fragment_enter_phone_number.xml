@@ -16,12 +16,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/countrySelectionDropdownMenu"
+            android:id="@+id/enter_phone_country_selection_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:hint="@string/default_country_title"
+            android:hint="@string/enter_phone_default_country_title"
             app:boxStrokeColor="@color/colorPrimary"
             app:endIconTint="@color/colorPrimary"
             app:hintTextColor="@color/colorPrimary"
@@ -32,28 +32,28 @@
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/default_country_title"
+                android:hint="@string/enter_phone_country_hint_text"
                 android:inputType="none"
                 android:textColorHint="@color/colorPrimary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneNumberInputLayout"
+            android:id="@+id/enter_phone_phone_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_vertical_margin"
-            android:hint="@string/phone_text"
+            android:hint="@string/enter_phone_phone_hint_text"
             app:boxStrokeColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countrySelectionDropdownMenu"
-            app:prefixText="+380"
+            app:layout_constraintTop_toBottomOf="@+id/enter_phone_country_selection_layout"
+            app:prefixText="@string/enter_phone_default_ukraine_country_code"
             app:prefixTextColor="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneNumberInputField"
+                android:id="@+id/enterPhoneInputField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
@@ -66,22 +66,23 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/enter_phone_helper_text"
             style="@style/faded_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_vertical_margin"
-            android:text="@string/enter_phone_number_fragment_help_text"
+            android:text="@string/enter_phone_helper_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phoneNumberInputLayout" />
+            app:layout_constraintTop_toBottomOf="@id/enter_phone_phone_input_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/confirmFab"
+        android:id="@+id/enterPhoneConfirmFab"
         style="@style/bottom_fab_style"
-        android:contentDescription="@string/confirm_floating_button_description"
+        android:contentDescription="@string/enter_phone_fab_cd"
         android:src="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
