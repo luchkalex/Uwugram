@@ -29,14 +29,21 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
     override fun onStart() {
         super.onStart()
         setHasOptionsMenu(true)
-        activity?.title = "Settings"
+        activity?.title = getString(R.string.settings_activity_title)
         binding.settingsFullName.text = USER.fullName
         binding.activeStatus.text = USER.status
-        binding.userPhoneNumber.text = USER.phone
-        if (USER.bio.isNotEmpty())
-            binding.bio.text = USER.bio
-        if (USER.username.isNotEmpty())
-            binding.username.text = getString(R.string.username_placeholder, USER.username)
+        binding.settingsPhoneText.text = USER.phone
+
+        binding.settingsBioText.text = if (USER.bio.isNotEmpty()) USER.bio else
+            getString(R.string.settings_default_bio_text)
+
+        binding.settingsUsernameText.text = if (USER.username.isNotEmpty())
+            getString(R.string.username_placeholder, USER.username) else
+            getString(R.string.settings_default_username_text)
+
+        binding.settingsUsernameTile.setOnClickListener {
+            replaceFragment(R.id.fragmentContainer, EditUsernameFragment())
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
