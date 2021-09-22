@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">Uwugram</string>
 
+    <string name="login_welcome_back_message">Welcome back</string>
+    <string name="login_welcome_message">Welcome</string>
+
+    <!--  Activity titles  -->
     <string name="login_activity_title">Your phone</string>
     <string name="edit_name_activity_title">Edit name</string>
     <string name="edit_username_activity_title">Edit username</string>
     <string name="settings_activity_title">Settings</string>
+
+    <!--    Statuses    -->
+    <string name="online_status">online</string>
 
     <!--    Drawer menu titles  -->
     <string name="new_group">New group</string>
@@ -33,6 +40,7 @@
     <string name="code_verification_helper_text">Please enter verification code</string>
     <string name="code_verification_helper_text_2">We sent SMS with code on your phone number</string>
     <string name="code_verification_hint_text">-- -- -- -- -- --</string>
+    <string name="code_verification_wrong_code_message">Wrong code</string>
 
     <!--    Enter phone fragment  -->
     <string name="enter_phone_default_ukraine_country_code">+380</string>
@@ -46,6 +54,9 @@
     <string name="edit_name_fab_cd">Confirm</string>
     <string name="edit_name_first_name_hint_text">First name (required)</string>
     <string name="edit_name_last_name_hint_text">Last name (optional)</string>
+    <string name="edit_name_name_updated_message">Name updated</string>
+    <string name="edit_name_name_required_message">First name is required</string>
+
 
     <!--    Edit username fragment  -->
     <string name="username_placeholder">\@%1$s</string>
@@ -54,5 +65,9 @@
         If you do, people will be able to find you by this username and contact
         you without needing your phone number.\n\nYou can user a–z, 0–9 and
         underscores. Minimum length is 5 characters.</string>
-
+    <string name="edit_username_username_taken_message">Sorry this username already taken</string>
+    <string name="edit_username_name_required_message">Username is required</string>
+    <string name="edit_username_na_symbols_message">Username contains not allowed symbols</string>
+    <string name="edit_username_name_updated_message">Username updated</string>
+    <string name="enter_phone_number_too_short_message">Phone number too short</string>
 </resources>

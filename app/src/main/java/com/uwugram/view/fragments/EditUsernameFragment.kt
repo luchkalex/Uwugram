@@ -34,7 +34,7 @@ class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
                 REF_DATABASE_ROOT.child(NODE_USERNAME)
                     .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
                         if (snapshot.hasChild(username)) {
-                            showShortToast("Sorry this username already taken")
+                            showShortToast(getString(R.string.edit_username_username_taken_message))
                         } else {
                             updateUsername(username)
                         }
@@ -47,14 +47,14 @@ class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
         val regex = Regex("(\\w|\\d)*")
         return when {
             username.isEmpty() -> {
-                showShortToast("Username is required")
+                showShortToast(getString(R.string.edit_username_name_required_message))
                 false
             }
             regex.matches(username) -> {
                 true
             }
             else -> {
-                showShortToast("Username contains not allowed symbols")
+                showShortToast(getString(R.string.edit_username_na_symbols_message))
                 false
             }
         }
@@ -86,7 +86,7 @@ class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
         REF_DATABASE_ROOT.child(NODE_USERNAME).child(USER.username).removeValue()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    showShortToast("Username updated")
+                    showShortToast(getString(R.string.edit_username_name_updated_message))
                     activity?.supportFragmentManager?.popBackStack()
                     activity?.let { activity -> hideKeyboard(activity) }
                 } else {

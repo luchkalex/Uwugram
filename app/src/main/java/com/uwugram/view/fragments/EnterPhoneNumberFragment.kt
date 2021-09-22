@@ -58,8 +58,8 @@ class EnterPhoneNumberFragment : Fragment() {
     private fun sendCode() {
         phoneNumber =
             getString(R.string.enter_phone_default_ukraine_country_code) + binding.enterPhoneInputField.text.toString()
-        if (phoneNumber.length < 9) {
-            showShortToast("Enter phone number")
+        if (phoneNumber.length < 13) {
+            showShortToast(getString(R.string.enter_phone_number_too_short_message))
         } else {
             authUser()
         }

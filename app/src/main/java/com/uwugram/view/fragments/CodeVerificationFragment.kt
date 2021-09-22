@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.PhoneAuthProvider
+import com.uwugram.R
 import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentCodeVerificationBinding
+import com.uwugram.model.User
 import com.uwugram.utils.*
 
 class CodeVerificationFragment(val id: String, private val phoneNumber: String) : Fragment() {
@@ -38,25 +40,32 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
         val credential = PhoneAuthProvider.getCredential(id, code)
         AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val dataMap = mutableMapOf<String, Any>()
-                val uid = AUTH.currentUser?.uid.toString()
-                dataMap[FIELD_USERS_ID] = uid
-                dataMap[FIELD_USERS_PHONE] = phoneNumber
-                dataMap[FIELD_USERS_USERNAME] = ""
-                dataMap[FIELD_USERS_FULLNAME] = "UWU "
-                dataMap[FIELD_USERS_BIO] = ""
-                dataMap[FIELD_USERS_STATUS] = "online"
-                dataMap[FIELD_USERS_PHOTO_URL] = ""
-                REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            (activity as LoginActivity).replaceActivity(MainActivity())
+                UID = AUTH.currentUser?.uid.toString()
+
+                REF_DATABASE_ROOT.child(NODE_USERS)
+                    .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
+                        if (snapshot.hasChild(UID)) {
+                            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_STATUS)
+                                .setValue(getString(R.string.online_status))
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        showShortToast(getString(R.string.login_welcome_back_message))
+                                        (activity as LoginActivity).replaceActivity(MainActivity())
+                                    }
+                                }
                         } else {
-                            showShortToast(it.exception?.message.toString())
+                            USER = User(
+                                id = UID,
+                                phone = phoneNumber,
+                            )
+                            replaceFragment(
+                                R.id.loginFragmentContainer,
+                                EditNameFragment(initial = true)
+                            )
                         }
-                    }
+                    })
             } else {
-                showShortToast("Wrong code")
+                showShortToast(getString(R.string.code_verification_wrong_code_message))
                 binding.codeVerificationInputField.setText("")
             }
         }
