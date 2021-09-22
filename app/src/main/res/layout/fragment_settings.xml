@@ -29,25 +29,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_horizontal_margin"
-            tools:text="@string/settings_default_username_text"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/large_text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/activeStatus"
             app:layout_constraintLeft_toRightOf="@+id/settingsProfileImage"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/settings_default_username_text" />
 
         <TextView
             android:id="@+id/activeStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_horizontal_margin"
-            tools:text="@string/settings_default_active_status"
             android:textColor="@color/colorAccentDark"
             android:textSize="@dimen/normal_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/settingsProfileImage"
-            app:layout_constraintTop_toBottomOf="@+id/settingsFullName" />
+            app:layout_constraintTop_toBottomOf="@+id/settingsFullName"
+            tools:text="@string/settings_default_active_status" />
 
         <View
             android:layout_width="wrap_content"
@@ -66,30 +66,41 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/settings_header_block">
 
-        <TextView
-            android:id="@+id/settings_account_label"
-            style="@style/settings_header_text_style"
-            android:text="@string/setting_account_text"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/settings_header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/profile_info_block" />
+            app:layout_constraintTop_toTopOf="@id/profile_info_block">
+
+            <TextView
+                android:id="@+id/settings_account_label"
+                style="@style/settings_header_text_style"
+                android:text="@string/setting_account_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/settings_phone_tile"
             style="@style/settings_user_data_list_tile_style"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_account_label">
+            app:layout_constraintTop_toBottomOf="@id/settings_header_text">
 
             <TextView
                 android:id="@+id/settings_phone_text"
-                style="@style/normal_text_style"
-                tools:text="@string/settings_default_phone_number"
+                style="@style/settings_tile_text_style"
                 app:layout_constraintBottom_toTopOf="@+id/settings_phone_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/settings_default_phone_number" />
 
             <TextView
                 android:id="@+id/settings_phone_helper_text"
-                style="@style/faded_text_style"
+                style="@style/settings_helper_text_style"
                 android:text="@string/settings_phone_helper_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/settings_phone_text"
@@ -110,15 +121,15 @@
 
             <TextView
                 android:id="@+id/settings_username_text"
-                style="@style/normal_text_style"
-                tools:text="@string/settings_default_username_text"
+                style="@style/settings_tile_text_style"
                 app:layout_constraintBottom_toTopOf="@+id/settings_username_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/settings_default_username_text" />
 
             <TextView
                 android:id="@+id/settings_username_helper_text"
-                style="@style/faded_text_style"
+                style="@style/settings_helper_text_style"
                 android:text="@string/settings_username_helper_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/settings_username_text"
@@ -139,15 +150,15 @@
 
             <TextView
                 android:id="@+id/settings_bio_text"
-                style="@style/normal_text_style"
-                tools:text="@string/settings_default_bio_text"
+                style="@style/settings_tile_text_style"
                 app:layout_constraintBottom_toTopOf="@+id/settings_bio_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/settings_default_bio_text" />
 
             <TextView
                 android:id="@+id/settings_bio_helper_text"
-                style="@style/faded_text_style"
+                style="@style/settings_helper_text_style"
                 android:text="@string/settings_bio_helper_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/settings_bio_text"

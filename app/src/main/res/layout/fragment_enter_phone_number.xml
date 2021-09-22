@@ -67,7 +67,7 @@
 
         <TextView
             android:id="@+id/enter_phone_helper_text"
-            style="@style/faded_text_style"
+            style="@style/settings_helper_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_vertical_margin"

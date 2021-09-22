@@ -33,6 +33,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
         binding.settingsFullName.text = USER.fullName
         binding.activeStatus.text = USER.status
         binding.settingsPhoneText.text = USER.phone
+        binding.settingsBioText.text = USER.bio
 
         binding.settingsBioText.text = if (USER.bio.isNotEmpty()) USER.bio else
             getString(R.string.settings_default_bio_text)
@@ -43,6 +44,10 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
         binding.settingsUsernameTile.setOnClickListener {
             replaceFragment(R.id.fragmentContainer, EditUsernameFragment())
+        }
+
+        binding.settingsBioTile.setOnClickListener {
+            replaceFragment(R.id.fragmentContainer, EditBioFragment())
         }
     }
 

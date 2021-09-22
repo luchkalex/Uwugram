@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_abstract.xml" value="0.33958333333333335" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.33958333333333335" />
         <entry key="app/src/main/res/layout/fragment_code_verification.xml" value="0.33958333333333335" />
+        <entry key="app/src/main/res/layout/fragment_edit_bio.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_edit_name.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_edit_username.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_enter_phone_number.xml" value="0.1" />

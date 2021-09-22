@@ -70,4 +70,11 @@
     <string name="edit_username_na_symbols_message">Username contains not allowed symbols</string>
     <string name="edit_username_name_updated_message">Username updated</string>
     <string name="enter_phone_number_too_short_message">Phone number too short</string>
+
+    <!--    Bio fragment    -->
+    <string name="edit_bio_hint_text">Bio</string>
+    <string name="edit_bio_helper_text">You can add a few lines about yourself. Anyone who opens your profile will see this text.</string>
+    <string name="edit_bio_activity_title">Bio</string>
+    <string name="edit_bio_updated_message">Bio updated</string>
+    <string name="edit_bio_required_message">Bio required</string>
 </resources>
