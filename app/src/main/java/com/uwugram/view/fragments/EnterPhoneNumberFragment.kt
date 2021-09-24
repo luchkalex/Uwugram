@@ -5,16 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.R
 import com.uwugram.databinding.FragmentEnterPhoneNumberBinding
+import com.uwugram.utils.AUTH
+import com.uwugram.utils.initFirebase
 import com.uwugram.utils.replaceFragment
 import com.uwugram.utils.showShortToast
+import java.util.concurrent.TimeUnit
 
 class EnterPhoneNumberFragment : Fragment() {
 
     private var _binding: FragmentEnterPhoneNumberBinding? = null
-
     private val binding get() = _binding!!
+    private lateinit var callback: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private lateinit var phoneNumber: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,14 +35,46 @@ class EnterPhoneNumberFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.confirmFab.setOnClickListener { sendCode() }
+        initFirebase()
+        callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+
+            }
+
+            override fun onVerificationFailed(p0: FirebaseException) {
+                showShortToast(p0.message.toString())
+            }
+
+            override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
+                replaceFragment(
+                    R.id.loginFragmentContainer,
+                    CodeVerificationFragment(id, phoneNumber)
+                )
+            }
+        }
+        binding.enterPhoneConfirmFab.setOnClickListener { sendCode() }
     }
 
     private fun sendCode() {
-        if (binding.phoneNumberInputField.text.toString().length < 9) {
-            showShortToast("Enter phone number")
+        phoneNumber =
+            getString(R.string.enter_phone_default_ukraine_country_code) + binding.enterPhoneInputField.text.toString()
+        if (phoneNumber.length < 13) {
+            showShortToast(getString(R.string.enter_phone_number_too_short_message))
         } else {
-            replaceFragment(R.id.loginFragmentContainer, CodeVerificationFragment())
+            authUser()
+        }
+    }
+
+    private fun authUser() {
+        activity?.let {
+            PhoneAuthProvider.verifyPhoneNumber(
+                PhoneAuthOptions.newBuilder(AUTH)
+                    .setPhoneNumber(phoneNumber)
+                    .setTimeout(60, TimeUnit.SECONDS)
+                    .setActivity(it)
+                    .setCallbacks(callback)
+                    .build()
+            )
         }
     }
 }

@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initialize() {
         toolbar = binding.loginToolbar
         setSupportActionBar(toolbar)
-        title = getString(R.string.login_title_your_phone)
+        title = getString(R.string.login_activity_title)
         replaceFragment(R.id.loginFragmentContainer, EnterPhoneNumberFragment())
     }
 }

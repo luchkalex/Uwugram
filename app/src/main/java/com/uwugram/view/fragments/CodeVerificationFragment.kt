@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.PhoneAuthProvider
+import com.uwugram.R
+import com.uwugram.activities.ChatActivity
+import com.uwugram.activities.LoginActivity
 import com.uwugram.databinding.FragmentCodeVerificationBinding
-import com.uwugram.utils.AppTextWatcher
-import com.uwugram.utils.showShortToast
+import com.uwugram.model.User
+import com.uwugram.utils.*
 
-class CodeVerificationFragment : Fragment() {
+class CodeVerificationFragment(val id: String, private val phoneNumber: String) : Fragment() {
 
     private var _binding: FragmentCodeVerificationBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -26,13 +29,45 @@ class CodeVerificationFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.verificationCodeInputField.addTextChangedListener(AppTextWatcher {
-            if (binding.verificationCodeInputField.text.toString().length == 6)
-                verifyCode()
+        binding.codeVerificationInputField.addTextChangedListener(AppTextWatcher {
+            if (binding.codeVerificationInputField.text.toString().length == 6)
+                onEnterCode()
         })
     }
 
-    private fun verifyCode() {
-        showShortToast("Code verification")
+    private fun onEnterCode() {
+        val code = binding.codeVerificationInputField.text.toString()
+        val credential = PhoneAuthProvider.getCredential(id, code)
+        AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                UID = AUTH.currentUser?.uid.toString()
+
+                REF_DATABASE_ROOT.child(NODE_USERS)
+                    .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
+                        if (snapshot.hasChild(UID)) {
+                            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_STATE)
+                                .setValue(getString(R.string.online_status))
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        showShortToast(getString(R.string.login_welcome_back_message))
+                                        (activity as LoginActivity).replaceActivity(ChatActivity())
+                                    }
+                                }
+                        } else {
+                            USER = User(
+                                id = UID,
+                                phone = phoneNumber,
+                            )
+                            replaceFragment(
+                                R.id.loginFragmentContainer,
+                                EditNameFragment(initial = true)
+                            )
+                        }
+                    })
+            } else {
+                showShortToast(getString(R.string.code_verification_wrong_code_message))
+                binding.codeVerificationInputField.setText("")
+            }
+        }
     }
 }
