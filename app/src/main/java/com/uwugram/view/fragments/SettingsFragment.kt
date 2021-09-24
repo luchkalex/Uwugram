@@ -32,7 +32,7 @@ class SettingsFragment : AbstractFragment() {
 
         activity?.title = getString(R.string.settings_activity_title)
         binding.settingsFullName.text = USER.fullName
-        binding.activeStatus.text = USER.status
+        binding.activeStatus.text = USER.state
         binding.settingsPhoneText.text = USER.phone
         binding.settingsBioText.text = USER.bio
 
@@ -96,8 +96,10 @@ class SettingsFragment : AbstractFragment() {
                 replaceFragment(R.id.fragmentContainer, EditNameFragment())
             }
             R.id.settings_menu_logout -> {
+                AppState.updateState(AppState.OFFLINE)
                 AUTH.signOut()
                 CHAT_ACTIVITY.replaceActivity(LoginActivity())
+                    .also { updateUserState(Signals.REPLACE) }
             }
             R.id.settings_menu_change_photo -> {
                 selectImage()

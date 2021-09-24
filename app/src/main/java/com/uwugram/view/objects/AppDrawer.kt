@@ -20,9 +20,7 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.uwugram.R
 import com.uwugram.activities.MainActivity
-import com.uwugram.utils.USER
-import com.uwugram.utils.downloadAndSetImage
-import com.uwugram.utils.replaceActivity
+import com.uwugram.utils.*
 import com.uwugram.view.fragments.SettingsFragment
 
 class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
@@ -62,10 +60,12 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
+                    updateUserState(Signals.REPLACE)
                     when (position) {
                         5 -> MainActivity.fragment = SettingsFragment()
                     }
                     activity.replaceActivity(MainActivity())
+
                     return false
                 }
             })

@@ -71,7 +71,8 @@ class EditUsernameFragment : Fragment() {
                         .setValue(newUsername)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                deleteOldUsername()
+                                if (USER.username.isNotEmpty())
+                                    deleteOldUsername()
                                 USER.username = username
                             } else {
                                 showShortToast(it.exception?.message.toString())

@@ -12,7 +12,7 @@ import com.uwugram.view.objects.AppDrawer
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
-    lateinit var toolbar: Toolbar
+    private lateinit var toolbar: Toolbar
     lateinit var appDrawer: AppDrawer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +21,16 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initialize()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        updateUserState(Signals.START)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        updateUserState(Signals.STOP)
     }
 
     private fun initialize() {

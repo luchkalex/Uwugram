@@ -45,7 +45,7 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
                 REF_DATABASE_ROOT.child(NODE_USERS)
                     .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
                         if (snapshot.hasChild(UID)) {
-                            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_STATUS)
+                            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_STATE)
                                 .setValue(getString(R.string.online_status))
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {

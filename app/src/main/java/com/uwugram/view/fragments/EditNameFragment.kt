@@ -54,10 +54,6 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
                             val dataMap = mutableMapOf<String, Any>()
                             dataMap[FIELD_USERS_ID] = UID
                             dataMap[FIELD_USERS_PHONE] = USER.phone
-                            dataMap[FIELD_USERS_USERNAME] = ""
-                            dataMap[FIELD_USERS_BIO] = ""
-                            dataMap[FIELD_USERS_STATUS] = getString(R.string.online_status)
-                            dataMap[FIELD_USERS_PHOTO_URL] = ""
                             REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(dataMap)
                                 .addOnCompleteListener {
                                     if (!it.isSuccessful) {

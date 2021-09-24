@@ -60,3 +60,18 @@ fun ImageView.downloadAndSetImage(photoURL: String) {
         .into(this)
 }
 
+fun updateUserState(signal: Signals) {
+    when (STATE_UPDATE_FLAG) {
+        0 -> STATE_UPDATE_FLAG++
+        1 -> {
+            when (signal) {
+                Signals.START -> AppState.updateState(AppState.ONLINE)
+                Signals.STOP -> AppState.updateState(AppState.OFFLINE)
+                Signals.REPLACE -> STATE_UPDATE_FLAG++
+            }
+        }
+        2 -> STATE_UPDATE_FLAG = 0
+    }
+}
+
+
