@@ -38,6 +38,7 @@ class EditBioFragment : AbstractFragment(R.layout.fragment_edit_bio) {
                         if (it.isSuccessful) {
                             showShortToast(getString(R.string.edit_bio_updated_message))
                             USER.bio = bio
+                            activity?.let { activity -> hideKeyboard(activity) }
                             activity?.supportFragmentManager?.popBackStack()
                         } else {
                             showShortToast(it.exception?.message.toString())

@@ -69,6 +69,7 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
                             (activity as LoginActivity).replaceActivity(MainActivity())
                         } else
                             showShortToast(getString(R.string.edit_name_name_updated_message))
+                        activity?.let { hideKeyboard(it) }
                         activity?.supportFragmentManager?.popBackStack()
                     }
                 }
