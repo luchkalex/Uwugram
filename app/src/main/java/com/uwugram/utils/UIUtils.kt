@@ -12,11 +12,11 @@ import com.squareup.picasso.Picasso
 import com.uwugram.R
 
 fun Fragment.showShortToast(message: String) {
-    Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+    context?.let { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
 }
 
 fun AppCompatActivity.showShortToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    let { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
 }
 
 fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {

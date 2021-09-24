@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.uwugram.R
 import com.uwugram.databinding.FragmentEditUsernameBinding
 import com.uwugram.utils.*
 
-class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
+class EditUsernameFragment : Fragment() {
 
     private var _binding: FragmentEditUsernameBinding? = null
     private val binding get() = _binding!!

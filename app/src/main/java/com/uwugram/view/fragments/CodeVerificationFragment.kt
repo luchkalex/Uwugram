@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.R
+import com.uwugram.activities.ChatActivity
 import com.uwugram.activities.LoginActivity
-import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentCodeVerificationBinding
 import com.uwugram.model.User
 import com.uwugram.utils.*
@@ -50,7 +50,7 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         showShortToast(getString(R.string.login_welcome_back_message))
-                                        (activity as LoginActivity).replaceActivity(MainActivity())
+                                        (activity as LoginActivity).replaceActivity(ChatActivity())
                                     }
                                 }
                         } else {

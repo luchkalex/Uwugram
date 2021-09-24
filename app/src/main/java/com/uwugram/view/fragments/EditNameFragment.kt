@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.uwugram.R
+import com.uwugram.activities.ChatActivity
 import com.uwugram.activities.LoginActivity
-import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentEditNameBinding
 import com.uwugram.utils.*
 
@@ -65,9 +65,9 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
                                     }
                                 }
                             showShortToast(getString(R.string.login_welcome_message))
-                            (activity as LoginActivity).replaceActivity(MainActivity())
+                            (activity as LoginActivity).replaceActivity(ChatActivity())
                         } else {
-                            (activity as MainActivity).appDrawer.updateHeader()
+                            CHAT_ACTIVITY.appDrawer.updateHeader()
                             showShortToast(getString(R.string.edit_name_name_updated_message))
                             activity?.let { hideKeyboard(it) }
                             activity?.supportFragmentManager?.popBackStack()

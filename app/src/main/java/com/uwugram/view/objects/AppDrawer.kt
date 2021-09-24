@@ -19,9 +19,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.uwugram.R
+import com.uwugram.activities.MainActivity
 import com.uwugram.utils.USER
 import com.uwugram.utils.downloadAndSetImage
-import com.uwugram.utils.replaceFragment
+import com.uwugram.utils.replaceActivity
 import com.uwugram.view.fragments.SettingsFragment
 
 class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
@@ -37,24 +38,6 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
         createHeader()
         createDrawer()
         drawerLayout = drawer.drawerLayout
-    }
-
-    fun disableDrawer() {
-        drawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
-        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        toolbar.setNavigationOnClickListener {
-            activity.supportFragmentManager.popBackStack()
-        }
-    }
-
-    fun enableDrawer() {
-        activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        drawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        toolbar.setNavigationOnClickListener {
-            drawer.openDrawer()
-        }
     }
 
     private fun createDrawer() {
@@ -80,8 +63,9 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
-                        5 -> activity.replaceFragment(R.id.fragmentContainer, SettingsFragment())
+                        5 -> MainActivity.fragment = SettingsFragment()
                     }
+                    activity.replaceActivity(MainActivity())
                     return false
                 }
             })

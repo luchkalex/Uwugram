@@ -8,11 +8,10 @@ import android.view.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
-import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentSettingsBinding
 import com.uwugram.utils.*
 
-class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
+class SettingsFragment : AbstractFragment() {
 
     private var _binding: FragmentSettingsBinding? = null
 
@@ -30,6 +29,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
     override fun onStart() {
         super.onStart()
         setHasOptionsMenu(true)
+
         activity?.title = getString(R.string.settings_activity_title)
         binding.settingsFullName.text = USER.fullName
         binding.activeStatus.text = USER.status
@@ -76,7 +76,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
                 getImageUrl(storageRef) { url ->
                     savePhotoUrlToDataBase(url) {
                         binding.settingsProfileImage.downloadAndSetImage(url.toString())
-                        (activity as MainActivity).appDrawer.updateHeader()
+                        CHAT_ACTIVITY.appDrawer.updateHeader()
                         showShortToast("Image updated")
                         USER.photoURL = url.toString()
                     }
@@ -97,7 +97,10 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
             }
             R.id.settings_menu_logout -> {
                 AUTH.signOut()
-                (activity as MainActivity).replaceActivity(LoginActivity())
+                CHAT_ACTIVITY.replaceActivity(LoginActivity())
+            }
+            R.id.settings_menu_change_photo -> {
+                selectImage()
             }
         }
         return true
