@@ -1,15 +1,16 @@
 package com.uwugram.view.fragments
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentSettingsBinding
-import com.uwugram.utils.AUTH
-import com.uwugram.utils.USER
-import com.uwugram.utils.replaceActivity
-import com.uwugram.utils.replaceFragment
+import com.uwugram.utils.*
 
 class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
@@ -42,12 +43,44 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
             getString(R.string.username_placeholder, USER.username) else
             getString(R.string.settings_default_username_text)
 
+        binding.settingsProfileImage.downloadAndSetImage(USER.photoURL)
+
         binding.settingsUsernameTile.setOnClickListener {
             replaceFragment(R.id.fragmentContainer, EditUsernameFragment())
         }
 
         binding.settingsBioTile.setOnClickListener {
             replaceFragment(R.id.fragmentContainer, EditBioFragment())
+        }
+
+        binding.settingsEditPhotoFab.setOnClickListener {
+            selectImage()
+        }
+    }
+
+    private fun selectImage() {
+        ImagePicker.Companion.with(this)
+            .crop()
+            .cropSquare()
+            .compress(1024)
+            .maxResultSize(600, 600)
+            .start()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ImagePicker.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            val uri: Uri? = data.data
+            val storageRef = REF_STORAGE_ROOT.child(FOLDER_PROFILE_IMAGES).child(UID)
+
+            putImageToStorage(uri, storageRef) {
+                getImageUrl(storageRef) { url ->
+                    savePhotoUrlToDataBase(url) {
+                        binding.settingsProfileImage.downloadAndSetImage(url.toString())
+                        showShortToast("Image updated")
+                        USER.photoURL = url.toString()
+                    }
+                }
+            }
         }
     }
 

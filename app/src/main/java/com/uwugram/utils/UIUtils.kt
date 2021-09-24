@@ -1,12 +1,15 @@
 package com.uwugram.utils
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.squareup.picasso.Picasso
+import com.uwugram.R
 
 fun Fragment.showShortToast(message: String) {
     Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
@@ -43,11 +46,17 @@ fun Fragment.replaceFragment(containerViewId: Int, fragment: Fragment) {
 }
 
 fun hideKeyboard(activity: Activity) {
-    val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    var view = activity.currentFocus
-    if (view == null) {
-        view = View(activity)
-    }
-    imm.hideSoftInputFromWindow(view.windowToken, 0)
+    (activity.getSystemService(Context.INPUT_METHOD_SERVICE)
+            as InputMethodManager).hideSoftInputFromWindow(
+        activity.window.decorView.windowToken,
+        0
+    )
+}
+
+fun ImageView.downloadAndSetImage(photoURL: String) {
+    Picasso.get()
+        .load(photoURL)
+        .placeholder(R.drawable.default_avatar)
+        .into(this)
 }
 
