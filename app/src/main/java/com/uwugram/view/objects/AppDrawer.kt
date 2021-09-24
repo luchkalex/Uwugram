@@ -1,6 +1,9 @@
 package com.uwugram.view.objects
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -13,8 +16,12 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
+import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.uwugram.R
-import com.uwugram.utils.*
+import com.uwugram.utils.USER
+import com.uwugram.utils.downloadAndSetImage
+import com.uwugram.utils.replaceFragment
 import com.uwugram.view.fragments.SettingsFragment
 
 class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
@@ -23,8 +30,10 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
     private lateinit var header: AccountHeader
     private var primaryDrawerItemID = 0L
     private var drawerLayout: DrawerLayout
+    private lateinit var currentProfile: ProfileDrawerItem
 
     init {
+        initLoader()
         createHeader()
         createDrawer()
         drawerLayout = drawer.drawerLayout
@@ -89,13 +98,35 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
     }
 
     private fun createHeader() {
+        currentProfile = ProfileDrawerItem()
+            .withName(USER.fullName)
+            .withEmail(USER.phone)
+            .withIcon(USER.photoURL)
+            .withIdentifier(1)
+
         header = AccountHeaderBuilder()
             .withActivity(activity)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
-                ProfileDrawerItem()
-                    .withName(USER.fullName)
-                    .withEmail(USER.phone)
+                currentProfile
             ).build()
+    }
+
+    fun updateHeader() {
+        currentProfile
+            .withName(USER.fullName)
+            .withEmail(USER.phone)
+            .withIcon(USER.photoURL)
+
+        header.updateProfile(currentProfile)
+    }
+
+    private fun initLoader() {
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable, tag: String?) {
+                super.set(imageView, uri, placeholder, tag)
+                imageView.downloadAndSetImage(uri.toString())
+            }
+        })
     }
 }

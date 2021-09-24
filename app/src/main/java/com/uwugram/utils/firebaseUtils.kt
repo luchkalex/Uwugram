@@ -39,7 +39,10 @@ fun initFirebase() {
 
 inline fun savePhotoUrlToDataBase(uri: Uri, crossinline onSuccess: () -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_PHOTO_URL)
-        .setValue(uri.toString()).addOnSuccessListener { onSuccess() }
+        .setValue(uri.toString()).addOnSuccessListener {
+            USER.photoURL = uri.toString()
+            onSuccess()
+        }
 }
 
 inline fun getImageUrl(storageRef: StorageReference, crossinline onSuccess: (Uri) -> Unit) {
@@ -54,4 +57,12 @@ inline fun putImageToStorage(
     uri?.let {
         storageRef.putFile(it).addOnSuccessListener { onSuccess() }
     }
+}
+
+inline fun initializeUser(crossinline onComplete: () -> Unit) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
+        .addListenerForSingleValueEvent(AppValueEventListener {
+            USER = it.getValue(USER::class.java) ?: User()
+            onComplete()
+        })
 }

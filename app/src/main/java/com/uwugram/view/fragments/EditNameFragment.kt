@@ -45,7 +45,6 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
         if (fullName.isEmpty()) {
             showShortToast(getString(R.string.edit_name_name_required_message))
         } else {
-
             fullName = "$fullName ${binding.editSurnameInputField.text.toString()}"
             REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_FULLNAME)
                 .setValue(fullName).addOnCompleteListener { task ->
@@ -67,10 +66,12 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
                                 }
                             showShortToast(getString(R.string.login_welcome_message))
                             (activity as LoginActivity).replaceActivity(MainActivity())
-                        } else
+                        } else {
+                            (activity as MainActivity).appDrawer.updateHeader()
                             showShortToast(getString(R.string.edit_name_name_updated_message))
-                        activity?.let { hideKeyboard(it) }
-                        activity?.supportFragmentManager?.popBackStack()
+                            activity?.let { hideKeyboard(it) }
+                            activity?.supportFragmentManager?.popBackStack()
+                        }
                     }
                 }
         }
