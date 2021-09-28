@@ -1,12 +1,15 @@
 package com.uwugram.utils
 
 import android.net.Uri
+import android.provider.ContactsContract
+import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.uwugram.model.User
+import java.util.*
 
 lateinit var AUTH: FirebaseAuth
 lateinit var REF_DATABASE_ROOT: DatabaseReference
@@ -17,6 +20,9 @@ lateinit var UID: String
 
 const val NODE_USERS = "users"
 const val NODE_USERNAME = "username"
+const val NODE_PHONE = "phone"
+const val NODE_PHONE_CONTACTS = "phoneContacts"
+
 
 const val FOLDER_PROFILE_IMAGES = "profileImages"
 
@@ -67,4 +73,58 @@ inline fun initializeUser(crossinline onComplete: () -> Unit) {
             USER = it.getValue(USER::class.java) ?: User()
             onComplete()
         })
+}
+
+fun initContacts() {
+    if (checkPermission(READ_CONTACTS)) {
+        val arrayContacts = arrayListOf<User>()
+        val cursor = MAIN_ACTIVITY.contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null,
+        )
+        while (cursor?.moveToNext() == true) {
+            val displayNameColumnIndex =
+                cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+            val phoneNumberColumnIndex =
+                cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+
+            val fullName = cursor.getString(displayNameColumnIndex)
+            var phone = cursor.getString(phoneNumberColumnIndex)
+
+            val newUser = User().apply {
+                this.fullName = fullName
+                if (!phone.startsWith("+")) {
+                    phone = "+38$phone"
+                }
+                this.phone = phone.replace(Regex("[\\s,-]"), "")
+            }
+
+            if (newUser.phone != USER.phone)
+                arrayContacts.add(newUser)
+        }
+        cursor?.close()
+        updatePhoneContacts(arrayContacts)
+    } else {
+        ActivityCompat.requestPermissions(
+            MAIN_ACTIVITY,
+            arrayOf(READ_CONTACTS),
+            PermissionCodes.PERMISSION_READ_CONTACTS_REQUEST_CODE.code
+        )
+    }
+}
+
+fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
+    REF_DATABASE_ROOT.child(NODE_PHONE).addListenerForSingleValueEvent(AppValueEventListener {
+        it.children.forEach { dataSnapshot ->
+            arrayContacts.forEach { contact ->
+                if (dataSnapshot.key == contact.phone) {
+                    REF_DATABASE_ROOT.child(NODE_PHONE_CONTACTS).child(USER.id)
+                        .child(dataSnapshot.value.toString()).setValue("")
+                }
+            }
+        }
+    })
 }

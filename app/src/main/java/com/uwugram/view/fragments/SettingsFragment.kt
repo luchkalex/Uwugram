@@ -76,7 +76,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
                     savePhotoUrlToDataBase(url) {
                         binding.settingsProfileImage.downloadAndSetImage(url.toString())
                         MAIN_ACTIVITY.appDrawer.updateHeader()
-                        MAIN_ACTIVITY.showShortToast("Image updated")
+                        MAIN_ACTIVITY.showShortToast(getString(R.string.settings_image_updated_message))
                         USER.photoURL = url.toString()
                     }
                 }

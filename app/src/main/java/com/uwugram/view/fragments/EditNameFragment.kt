@@ -53,17 +53,7 @@ class EditNameFragment : Fragment() {
                     if (task.isSuccessful) {
                         USER.fullName = fullName
                         if (initial) {
-                            val dataMap = mutableMapOf<String, Any>()
-                            dataMap[FIELD_USERS_ID] = UID
-                            dataMap[FIELD_USERS_PHONE] = USER.phone
-                            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(dataMap)
-                                .addOnCompleteListener {
-                                    if (!it.isSuccessful) {
-                                        showShortToast(it.exception?.message.toString())
-                                    }
-                                }
-                            showShortToast(getString(R.string.login_welcome_message))
-                            (activity as LoginActivity).replaceActivity(MainActivity())
+                            initialSaveDataToDB()
                         } else {
                             MAIN_ACTIVITY.appDrawer.updateHeader()
                             showShortToast(getString(R.string.edit_name_name_updated_message))
@@ -73,5 +63,20 @@ class EditNameFragment : Fragment() {
                     }
                 }
         }
+    }
+
+    private fun initialSaveDataToDB() {
+        val dataMap = mutableMapOf<String, Any>()
+        dataMap[FIELD_USERS_ID] = UID
+        dataMap[FIELD_USERS_PHONE] = USER.phone
+        REF_DATABASE_ROOT.child(NODE_PHONE).child(USER.phone).setValue(UID)
+            .addOnSuccessListener {
+                REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
+                    .updateChildren(dataMap)
+                    .addOnSuccessListener {
+                        showShortToast(getString(R.string.login_welcome_message))
+                        (activity as LoginActivity).replaceActivity(MainActivity())
+                    }
+            }
     }
 }

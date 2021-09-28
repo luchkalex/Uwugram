@@ -65,14 +65,35 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
             .withSelectedItem(-1)
             .withAccountHeader(header)
             .addDrawerItems(
-                createPrimaryDrawerItem("New Group", R.drawable.ic_menu_create_groups),
-                createPrimaryDrawerItem("Contacts", R.drawable.ic_menu_contacts),
-                createPrimaryDrawerItem("Calls", R.drawable.ic_menu_phone),
-                createPrimaryDrawerItem("Saved messages", R.drawable.ic_menu_favorites),
-                createPrimaryDrawerItem("Settings", R.drawable.ic_menu_settings),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_new_group),
+                    R.drawable.ic_menu_create_groups
+                ),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_contacts),
+                    R.drawable.ic_menu_contacts
+                ),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_calls),
+                    R.drawable.ic_menu_phone
+                ),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_saved_messages),
+                    R.drawable.ic_menu_favorites
+                ),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_settings),
+                    R.drawable.ic_menu_settings
+                ),
                 DividerDrawerItem(),
-                createPrimaryDrawerItem("Invite friends", R.drawable.ic_menu_invate),
-                createPrimaryDrawerItem("FAQ", R.drawable.ic_menu_help),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_invite_friends),
+                    R.drawable.ic_menu_invate
+                ),
+                createPrimaryDrawerItem(
+                    activity.getString(R.string.drawer_item_faq),
+                    R.drawable.ic_menu_help
+                ),
             ).withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                 override fun onItemClick(
                     view: View?,
@@ -80,7 +101,8 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
-                        5 -> MAIN_ACTIVITY.navController.navigate(R.id.action_chatFragment_to_settingsFragment)
+                        5 -> MAIN_ACTIVITY.navController
+                            .navigate(R.id.action_chatFragment_to_settingsFragment)
                     }
                     return false
                 }

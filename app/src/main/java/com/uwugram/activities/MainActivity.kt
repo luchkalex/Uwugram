@@ -10,12 +10,15 @@ import com.uwugram.R
 import com.uwugram.databinding.ActivityMainBinding
 import com.uwugram.utils.*
 import com.uwugram.view.objects.AppDrawer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var toolbar: Toolbar
+    private lateinit var toolbar: Toolbar
     lateinit var appDrawer: AppDrawer
     lateinit var navController: NavController
 
@@ -33,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             toolbar = binding.mainToolbar
             setSupportActionBar(toolbar)
             initializeUser {
+                CoroutineScope(Dispatchers.IO).launch {
+                    initContacts()
+                }
+
                 appDrawer = AppDrawer(this, toolbar)
                 val navHostFragment =
                     supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
@@ -43,6 +50,20 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             replaceActivity(LoginActivity())
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PermissionCodes.PERMISSION_READ_CONTACTS_REQUEST_CODE.code -> {
+                if (checkPermission(READ_CONTACTS)) initContacts()
+                else showShortToast(getString(R.string.permission_denied_message))
+            }
         }
     }
 
