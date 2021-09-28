@@ -10,10 +10,10 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.R
+import com.uwugram.activities.LoginActivity
 import com.uwugram.databinding.FragmentEnterPhoneNumberBinding
 import com.uwugram.utils.AUTH
 import com.uwugram.utils.initFirebase
-import com.uwugram.utils.replaceFragment
 import com.uwugram.utils.showShortToast
 import java.util.concurrent.TimeUnit
 
@@ -46,10 +46,13 @@ class EnterPhoneNumberFragment : Fragment() {
             }
 
             override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
-                replaceFragment(
-                    R.id.loginFragmentContainer,
-                    CodeVerificationFragment(id, phoneNumber)
-                )
+                (activity as LoginActivity).navController
+                    .navigate(
+                        R.id.action_enterPhoneNumberFragment_to_codeVerificationFragment,
+                        Bundle().apply {
+                            putString("phoneNumber", phoneNumber)
+                            putString("id", id)
+                        })
             }
         }
         binding.enterPhoneConfirmFab.setOnClickListener { sendCode() }

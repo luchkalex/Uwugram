@@ -11,7 +11,7 @@ import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentEditNameBinding
 import com.uwugram.utils.*
 
-class EditNameFragment(private val initial: Boolean = false) : Fragment() {
+class EditNameFragment : Fragment() {
 
     private var _binding: FragmentEditNameBinding? = null
     private val binding get() = _binding!!
@@ -42,6 +42,8 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
 
     private fun updateName() {
         var fullName = binding.editNameInputField.text.toString()
+        val initial = arguments?.getBoolean("initial") ?: false
+
         if (fullName.isEmpty()) {
             showShortToast(getString(R.string.edit_name_name_required_message))
         } else {
@@ -54,10 +56,6 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
                             val dataMap = mutableMapOf<String, Any>()
                             dataMap[FIELD_USERS_ID] = UID
                             dataMap[FIELD_USERS_PHONE] = USER.phone
-                            dataMap[FIELD_USERS_USERNAME] = ""
-                            dataMap[FIELD_USERS_BIO] = ""
-                            dataMap[FIELD_USERS_STATUS] = getString(R.string.online_status)
-                            dataMap[FIELD_USERS_PHOTO_URL] = ""
                             REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(dataMap)
                                 .addOnCompleteListener {
                                     if (!it.isSuccessful) {
@@ -67,10 +65,10 @@ class EditNameFragment(private val initial: Boolean = false) : Fragment() {
                             showShortToast(getString(R.string.login_welcome_message))
                             (activity as LoginActivity).replaceActivity(MainActivity())
                         } else {
-                            (activity as MainActivity).appDrawer.updateHeader()
+                            MAIN_ACTIVITY.appDrawer.updateHeader()
                             showShortToast(getString(R.string.edit_name_name_updated_message))
                             activity?.let { hideKeyboard(it) }
-                            activity?.supportFragmentManager?.popBackStack()
+                            MAIN_ACTIVITY.navController.popBackStack()
                         }
                     }
                 }

@@ -33,7 +33,9 @@ fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
-    USER = User()
+    if (!::USER.isInitialized) {
+        USER = User()
+    }
     UID = AUTH.currentUser?.uid.toString()
 }
 

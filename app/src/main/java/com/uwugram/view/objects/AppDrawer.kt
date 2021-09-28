@@ -19,10 +19,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.uwugram.R
+import com.uwugram.utils.MAIN_ACTIVITY
 import com.uwugram.utils.USER
 import com.uwugram.utils.downloadAndSetImage
-import com.uwugram.utils.replaceFragment
-import com.uwugram.view.fragments.SettingsFragment
+
 
 class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
 
@@ -44,7 +44,7 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         toolbar.setNavigationOnClickListener {
-            activity.supportFragmentManager.popBackStack()
+            MAIN_ACTIVITY.navController.popBackStack()
         }
     }
 
@@ -80,7 +80,7 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
-                        5 -> activity.replaceFragment(R.id.fragmentContainer, SettingsFragment())
+                        5 -> MAIN_ACTIVITY.navController.navigate(R.id.action_chatFragment_to_settingsFragment)
                     }
                     return false
                 }

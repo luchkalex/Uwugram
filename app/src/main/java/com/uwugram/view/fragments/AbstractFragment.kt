@@ -1,18 +1,13 @@
 package com.uwugram.view.fragments
 
 import androidx.fragment.app.Fragment
-import com.uwugram.R
-import com.uwugram.activities.MainActivity
+import com.uwugram.utils.MAIN_ACTIVITY
 
 abstract class AbstractFragment(layout: Int) : Fragment(layout) {
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).appDrawer.disableDrawer()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as MainActivity).appDrawer.enableDrawer()
-        activity?.title = getString(R.string.app_name)
+        if (MAIN_ACTIVITY.isAppDrawerInitialized()) {
+            MAIN_ACTIVITY.appDrawer.disableDrawer()
+        }
     }
 }

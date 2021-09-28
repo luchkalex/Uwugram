@@ -8,7 +8,6 @@ import android.view.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
-import com.uwugram.activities.MainActivity
 import com.uwugram.databinding.FragmentSettingsBinding
 import com.uwugram.utils.*
 
@@ -46,11 +45,11 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
         binding.settingsProfileImage.downloadAndSetImage(USER.photoURL)
 
         binding.settingsUsernameTile.setOnClickListener {
-            replaceFragment(R.id.fragmentContainer, EditUsernameFragment())
+            MAIN_ACTIVITY.navController.navigate(R.id.action_settingsFragment_to_editUsernameFragment)
         }
 
         binding.settingsBioTile.setOnClickListener {
-            replaceFragment(R.id.fragmentContainer, EditBioFragment())
+            MAIN_ACTIVITY.navController.navigate(R.id.action_settingsFragment_to_editBioFragment)
         }
 
         binding.settingsEditPhotoFab.setOnClickListener {
@@ -76,8 +75,8 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
                 getImageUrl(storageRef) { url ->
                     savePhotoUrlToDataBase(url) {
                         binding.settingsProfileImage.downloadAndSetImage(url.toString())
-                        (activity as MainActivity).appDrawer.updateHeader()
-                        showShortToast("Image updated")
+                        MAIN_ACTIVITY.appDrawer.updateHeader()
+                        MAIN_ACTIVITY.showShortToast("Image updated")
                         USER.photoURL = url.toString()
                     }
                 }
@@ -93,11 +92,14 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings_menu_edit_name -> {
-                replaceFragment(R.id.fragmentContainer, EditNameFragment())
+                MAIN_ACTIVITY.navController.navigate(R.id.action_settingsFragment_to_editNameFragment)
             }
             R.id.settings_menu_logout -> {
                 AUTH.signOut()
-                (activity as MainActivity).replaceActivity(LoginActivity())
+                MAIN_ACTIVITY.replaceActivity(LoginActivity())
+            }
+            R.id.settings_menu_change_photo -> {
+                selectImage()
             }
         }
         return true

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph.xml"
+    app:startDestination="@id/enterPhoneNumberFragment">
+
+    <fragment
+        android:id="@+id/enterPhoneNumberFragment"
+        android:name="com.uwugram.view.fragments.EnterPhoneNumberFragment"
+        android:label="fragment_enter_phone_number"
+        tools:layout="@layout/fragment_enter_phone_number">
+        <action
+            android:id="@+id/action_enterPhoneNumberFragment_to_codeVerificationFragment"
+            app:destination="@id/codeVerificationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/codeVerificationFragment"
+        android:name="com.uwugram.view.fragments.CodeVerificationFragment"
+        android:label="fragment_code_verification"
+        tools:layout="@layout/fragment_code_verification">
+        <action
+            android:id="@+id/action_codeVerificationFragment_to_editNameFragment2"
+            app:destination="@id/editNameFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_codeVerificationFragment_to_enterPhoneNumberFragment"
+            app:destination="@id/enterPhoneNumberFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNameFragment2"
+        android:name="com.uwugram.view.fragments.EditNameFragment"
+        android:label="fragment_edit_name"
+        tools:layout="@layout/fragment_edit_name">
+        <action
+            android:id="@+id/action_editNameFragment2_to_codeVerificationFragment"
+            app:destination="@id/codeVerificationFragment" />
+    </fragment>
+</navigation>

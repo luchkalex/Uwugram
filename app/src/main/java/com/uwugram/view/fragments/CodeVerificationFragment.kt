@@ -13,7 +13,7 @@ import com.uwugram.databinding.FragmentCodeVerificationBinding
 import com.uwugram.model.User
 import com.uwugram.utils.*
 
-class CodeVerificationFragment(val id: String, private val phoneNumber: String) : Fragment() {
+class CodeVerificationFragment : Fragment() {
 
     private var _binding: FragmentCodeVerificationBinding? = null
     private val binding get() = _binding!!
@@ -37,6 +37,9 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
 
     private fun onEnterCode() {
         val code = binding.codeVerificationInputField.text.toString()
+        val id = arguments?.getString("id").toString()
+        val phoneNumber = arguments?.getString("phoneNumber").toString()
+
         val credential = PhoneAuthProvider.getCredential(id, code)
         AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -58,10 +61,17 @@ class CodeVerificationFragment(val id: String, private val phoneNumber: String) 
                                 id = UID,
                                 phone = phoneNumber,
                             )
-                            replaceFragment(
-                                R.id.loginFragmentContainer,
-                                EditNameFragment(initial = true)
-                            )
+//                            replaceFragment(
+//                                R.id.loginFragmentContainer,
+//                                EditNameFragment(initial = true)
+//                            )
+                            (activity as LoginActivity).navController
+                                .navigate(
+                                    R.id.action_codeVerificationFragment_to_editNameFragment2,
+                                    Bundle().apply {
+                                        putBoolean("initial", true)
+                                    })
+
                         }
                     })
             } else {

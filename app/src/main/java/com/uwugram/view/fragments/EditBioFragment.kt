@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.uwugram.R
 import com.uwugram.databinding.FragmentEditBioBinding
 import com.uwugram.utils.*
 
-class EditBioFragment : AbstractFragment(R.layout.fragment_edit_bio) {
+class EditBioFragment : Fragment() {
     private var _binding: FragmentEditBioBinding? = null
     private val binding get() = _binding!!
     private lateinit var bio: String
@@ -39,7 +40,7 @@ class EditBioFragment : AbstractFragment(R.layout.fragment_edit_bio) {
                             showShortToast(getString(R.string.edit_bio_updated_message))
                             USER.bio = bio
                             activity?.let { activity -> hideKeyboard(activity) }
-                            activity?.supportFragmentManager?.popBackStack()
+                            MAIN_ACTIVITY.navController.popBackStack()
                         } else {
                             showShortToast(it.exception?.message.toString())
                         }

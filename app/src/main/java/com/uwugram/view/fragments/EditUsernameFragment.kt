@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.uwugram.R
 import com.uwugram.databinding.FragmentEditUsernameBinding
 import com.uwugram.utils.*
 
-class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
+class EditUsernameFragment : Fragment() {
 
     private var _binding: FragmentEditUsernameBinding? = null
     private val binding get() = _binding!!
@@ -70,7 +71,8 @@ class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
                         .setValue(newUsername)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                deleteOldUsername()
+                                if (USER.username.isNotEmpty())
+                                    deleteOldUsername()
                                 USER.username = username
                             } else {
                                 showShortToast(it.exception?.message.toString())
@@ -87,7 +89,7 @@ class EditUsernameFragment : AbstractFragment(R.layout.fragment_edit_username) {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     showShortToast(getString(R.string.edit_username_name_updated_message))
-                    activity?.supportFragmentManager?.popBackStack()
+                    MAIN_ACTIVITY.navController.popBackStack()
                     activity?.let { activity -> hideKeyboard(activity) }
                 } else {
                     showShortToast(it.exception?.message.toString())
