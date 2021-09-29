@@ -4,6 +4,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -122,9 +123,12 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
             arrayContacts.forEach { contact ->
                 if (dataSnapshot.key == contact.phone) {
                     REF_DATABASE_ROOT.child(NODE_PHONE_CONTACTS).child(USER.id)
-                        .child(dataSnapshot.value.toString()).setValue("")
+                        .child(dataSnapshot.value.toString())
+                        .setValue(dataSnapshot.value.toString())
                 }
             }
         }
     })
 }
+
+fun DataSnapshot.getUserModel(): User = getValue(User::class.java) ?: User()

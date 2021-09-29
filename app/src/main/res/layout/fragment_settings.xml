@@ -26,12 +26,7 @@
 
         <TextView
             android:id="@+id/settingsFullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_margin"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/large_text_size"
-            android:textStyle="bold"
+            style="@style/user_fullname_textview_style"
             app:layout_constraintBottom_toTopOf="@+id/activeStatus"
             app:layout_constraintLeft_toRightOf="@+id/settingsProfileImage"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,11 +34,7 @@
 
         <TextView
             android:id="@+id/activeStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_margin"
-            android:textColor="@color/colorAccentDark"
-            android:textSize="@dimen/normal_text_size"
+            style="@style/user_status_textview_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/settingsProfileImage"
             app:layout_constraintTop_toBottomOf="@+id/settingsFullName"

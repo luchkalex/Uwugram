@@ -101,6 +101,8 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
+                        2 -> MAIN_ACTIVITY.navController
+                            .navigate(R.id.action_chatFragment_to_contactsFragment)
                         5 -> MAIN_ACTIVITY.navController
                             .navigate(R.id.action_chatFragment_to_settingsFragment)
                     }
