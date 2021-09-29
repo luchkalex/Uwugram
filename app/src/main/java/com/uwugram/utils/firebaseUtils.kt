@@ -35,6 +35,10 @@ const val FIELD_USERS_BIO = "bio"
 const val FIELD_USERS_STATUS = "status"
 const val FIELD_USERS_PHOTO_URL = "photoURL"
 
+enum class Statuses(val value: String) {
+    ONLINE("online"),
+    OFFLINE("offline"),
+}
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -129,6 +133,11 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
             }
         }
     })
+}
+
+fun updateUserStatus(status: Statuses) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATUS)
+        .setValue(status.value)
 }
 
 fun DataSnapshot.getUserModel(): User = getValue(User::class.java) ?: User()

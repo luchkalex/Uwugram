@@ -52,6 +52,7 @@ class CodeVerificationFragment : Fragment() {
                                 .setValue(getString(R.string.online_status))
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
+                                        USER.id = UID
                                         showShortToast(getString(R.string.login_welcome_back_message))
                                         (activity as LoginActivity).replaceActivity(MainActivity())
                                     }

@@ -29,6 +29,16 @@ class MainActivity : AppCompatActivity() {
         initialize()
     }
 
+    override fun onStart() {
+        super.onStart()
+        updateUserStatus(Statuses.ONLINE)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        updateUserStatus(Statuses.OFFLINE)
+    }
+
     private fun initialize() {
         MAIN_ACTIVITY = this
         initFirebase()
