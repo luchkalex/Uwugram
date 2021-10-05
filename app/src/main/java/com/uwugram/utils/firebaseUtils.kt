@@ -132,6 +132,7 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
                 }
             }
         }
+        arrayContacts.clear()
     })
 }
 

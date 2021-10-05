@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.uwugram.R
 import com.uwugram.databinding.FragmentContactsBinding
 import com.uwugram.utils.*
@@ -20,6 +21,7 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FirebaseRecyclerAdapter<String, ContactsHolder>
     private lateinit var dbRefContacts: DatabaseReference
+    private var mapListeners = hashMapOf<DatabaseReference, ValueEventListener>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,13 +55,15 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
 
             override fun onBindViewHolder(holder: ContactsHolder, position: Int, model: String) {
                 REF_DATABASE_ROOT.child(NODE_USERS).child(model)
-                    .addValueEventListener(AppValueEventListener {
-                        val contactUser = it.getUserModel()
-
-                        holder.name.text = contactUser.fullName
-                        holder.status.text = contactUser.status
-                        holder.photo.downloadAndSetImage(contactUser.photoURL)
-                    })
+                    .apply {
+                        addValueEventListener(AppValueEventListener {
+                            it.getUserModel().apply {
+                                holder.name.text = fullName
+                                holder.status.text = status
+                                holder.photo.downloadAndSetImage(photoURL)
+                            }
+                        }).also { valueEventListener -> mapListeners[this] = valueEventListener }
+                    }
             }
 
         }
@@ -71,6 +75,10 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
     override fun onStop() {
         super.onStop()
         adapter.stopListening()
+        mapListeners.forEach {
+            it.key.removeEventListener(it.value)
+        }
+        mapListeners.clear()
     }
 
     class ContactsHolder(view: View) : RecyclerView.ViewHolder(view) {
