@@ -78,6 +78,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/settings_phone_tile"
             style="@style/settings_user_data_list_tile_style"
+            android:background="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_header_text">
 

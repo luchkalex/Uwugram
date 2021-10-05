@@ -12,11 +12,11 @@ import com.squareup.picasso.Picasso
 import com.uwugram.R
 
 fun Fragment.showShortToast(message: String) {
-    Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+    context?.let { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
 }
 
 fun AppCompatActivity.showShortToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    let { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
 }
 
 fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
@@ -59,4 +59,19 @@ fun ImageView.downloadAndSetImage(photoURL: String) {
         .placeholder(R.drawable.default_avatar)
         .into(this)
 }
+
+fun updateUserState(signal: Signals) {
+    when (STATE_UPDATE_FLAG) {
+        0 -> STATE_UPDATE_FLAG++
+        1 -> {
+            when (signal) {
+                Signals.START -> AppState.updateState(AppState.ONLINE)
+                Signals.STOP -> AppState.updateState(AppState.OFFLINE)
+                Signals.REPLACE -> STATE_UPDATE_FLAG++
+            }
+        }
+        2 -> STATE_UPDATE_FLAG = 0
+    }
+}
+
 

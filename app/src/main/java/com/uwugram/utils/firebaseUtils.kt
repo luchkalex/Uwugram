@@ -32,7 +32,7 @@ const val FIELD_USERS_PHONE = "phone"
 const val FIELD_USERS_USERNAME = "username"
 const val FIELD_USERS_FULLNAME = "fullName"
 const val FIELD_USERS_BIO = "bio"
-const val FIELD_USERS_STATUS = "status"
+const val FIELD_USERS_STATE = "state"
 const val FIELD_USERS_PHOTO_URL = "photoURL"
 
 enum class Statuses(val value: String) {
