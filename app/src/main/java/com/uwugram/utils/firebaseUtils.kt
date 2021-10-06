@@ -137,7 +137,7 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
 }
 
 fun updateUserStatus(status: Statuses) {
-    REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATUS)
+    REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATE)
         .setValue(status.value)
 }
 
