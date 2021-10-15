@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.uwugram.R
 import com.uwugram.databinding.FragmentContactsBinding
+import com.uwugram.model.User
 import com.uwugram.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -19,7 +20,7 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
 
     private lateinit var binding: FragmentContactsBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: FirebaseRecyclerAdapter<String, ContactsHolder>
+    private lateinit var adapter: FirebaseRecyclerAdapter<User, ContactsHolder>
     private lateinit var dbRefContacts: DatabaseReference
     private var mapListeners = hashMapOf<DatabaseReference, ValueEventListener>()
 
@@ -41,11 +42,11 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
         recyclerView = binding.contactsRecycleView
         dbRefContacts = REF_DATABASE_ROOT.child(NODE_PHONE_CONTACTS).child(USER.id)
 
-        val options = FirebaseRecyclerOptions.Builder<String>()
-            .setQuery(dbRefContacts, String::class.java)
+        val options = FirebaseRecyclerOptions.Builder<User>()
+            .setQuery(dbRefContacts, User::class.java)
             .build()
 
-        adapter = object : FirebaseRecyclerAdapter<String, ContactsHolder>(options) {
+        adapter = object : FirebaseRecyclerAdapter<User, ContactsHolder>(options) {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsHolder {
                 return ContactsHolder(
                     LayoutInflater.from(parent.context)
@@ -53,14 +54,22 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
                 )
             }
 
-            override fun onBindViewHolder(holder: ContactsHolder, position: Int, model: String) {
-                REF_DATABASE_ROOT.child(NODE_USERS).child(model)
+            override fun onBindViewHolder(holder: ContactsHolder, position: Int, model: User) {
+                REF_DATABASE_ROOT.child(NODE_USERS).child(model.id)
                     .apply {
                         addValueEventListener(AppValueEventListener {
                             it.getUserModel().apply {
-                                holder.name.text = fullName
+                                holder.name.text = model.fullName
                                 holder.status.text = status
                                 holder.photo.downloadAndSetImage(photoURL)
+                                holder.itemView.setOnClickListener {
+                                    MAIN_ACTIVITY.navController.navigate(
+                                        R.id.action_contactsFragment_to_singleChatFragment,
+                                        Bundle().apply {
+                                            putString("id", id)
+                                        }
+                                    )
+                                }
                             }
                         }).also { valueEventListener -> mapListeners[this] = valueEventListener }
                     }

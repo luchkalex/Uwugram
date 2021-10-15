@@ -7,8 +7,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.uwugram.model.Message
 import com.uwugram.model.User
 import java.util.*
 
@@ -23,7 +25,7 @@ const val NODE_USERS = "users"
 const val NODE_USERNAME = "username"
 const val NODE_PHONE = "phone"
 const val NODE_PHONE_CONTACTS = "phoneContacts"
-
+const val NODE_MESSAGES = "messages"
 
 const val FOLDER_PROFILE_IMAGES = "profileImages"
 
@@ -35,9 +37,19 @@ const val FIELD_USERS_BIO = "bio"
 const val FIELD_USERS_STATE = "state"
 const val FIELD_USERS_PHOTO_URL = "photoURL"
 
+const val FIELD_SENDER = "sender"
+const val FIELD_TEXT = "text"
+const val FIELD_TYPE = "type"
+const val FIELD_TIMESTAMP = "timestamp"
+
+
 enum class Statuses(val value: String) {
     ONLINE("online"),
     OFFLINE("offline"),
+}
+
+enum class MessageTypes(val value: String) {
+    TEXT("text"),
 }
 
 fun initFirebase() {
@@ -127,8 +139,11 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
             arrayContacts.forEach { contact ->
                 if (dataSnapshot.key == contact.phone) {
                     REF_DATABASE_ROOT.child(NODE_PHONE_CONTACTS).child(USER.id)
-                        .child(dataSnapshot.value.toString())
+                        .child(dataSnapshot.value.toString()).child(FIELD_USERS_ID)
                         .setValue(dataSnapshot.value.toString())
+                    REF_DATABASE_ROOT.child(NODE_PHONE_CONTACTS).child(USER.id)
+                        .child(dataSnapshot.value.toString()).child(FIELD_USERS_FULLNAME)
+                        .setValue(contact.fullName)
                 }
             }
         }
@@ -142,3 +157,31 @@ fun updateUserStatus(status: Statuses) {
 }
 
 fun DataSnapshot.getUserModel(): User = getValue(User::class.java) ?: User()
+
+fun DataSnapshot.getMessageModel(): Message = getValue(Message::class.java) ?: Message()
+
+fun sendMessage(
+    message: String,
+    contactId: String,
+    messageType: MessageTypes,
+    onSuccess: () -> Unit
+) {
+
+    val refDialogUser = "$NODE_MESSAGES/$UID/$contactId"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$contactId/$UID"
+
+    val messageKey = REF_DATABASE_ROOT.child(refDialogUser).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[FIELD_SENDER] = UID
+    mapMessage[FIELD_TYPE] = messageType.value
+    mapMessage[FIELD_TEXT] = message
+    mapMessage[FIELD_TIMESTAMP] = ServerValue.TIMESTAMP
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+    mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
+
+    REF_DATABASE_ROOT.updateChildren(mapDialog)
+        .addOnSuccessListener { onSuccess() }
+}

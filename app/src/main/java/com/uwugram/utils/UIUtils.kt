@@ -25,25 +25,6 @@ fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
     this.finish()
 }
 
-fun AppCompatActivity.replaceFragment(
-    containerViewId: Int,
-    fragment: Fragment,
-    addToBackStack: Boolean = true
-) {
-    val fragmentTransaction = supportFragmentManager.beginTransaction()
-        .replace(containerViewId, fragment)
-
-    if (addToBackStack)
-        fragmentTransaction.addToBackStack(null)
-
-    fragmentTransaction.commit()
-}
-
-fun Fragment.replaceFragment(containerViewId: Int, fragment: Fragment) {
-    activity?.supportFragmentManager?.beginTransaction()
-        ?.addToBackStack(null)
-        ?.replace(containerViewId, fragment)?.commit()
-}
 
 fun hideKeyboard(activity: Activity) {
     (activity.getSystemService(Context.INPUT_METHOD_SERVICE)
@@ -58,20 +39,6 @@ fun ImageView.downloadAndSetImage(photoURL: String) {
         .load(photoURL)
         .placeholder(R.drawable.default_avatar)
         .into(this)
-}
-
-fun updateUserState(signal: Signals) {
-    when (STATE_UPDATE_FLAG) {
-        0 -> STATE_UPDATE_FLAG++
-        1 -> {
-            when (signal) {
-                Signals.START -> AppState.updateState(AppState.ONLINE)
-                Signals.STOP -> AppState.updateState(AppState.OFFLINE)
-                Signals.REPLACE -> STATE_UPDATE_FLAG++
-            }
-        }
-        2 -> STATE_UPDATE_FLAG = 0
-    }
 }
 
 

@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.get
 import com.uwugram.R
 import com.uwugram.databinding.ActivityMainBinding
+import com.uwugram.databinding.ChatToolbarBinding
 import com.uwugram.utils.*
 import com.uwugram.view.objects.AppDrawer
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +19,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var toolbar: Toolbar
+    lateinit var toolbar: Toolbar
+    lateinit var chatToolbarBinding: ChatToolbarBinding
     lateinit var appDrawer: AppDrawer
     lateinit var navController: NavController
 
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         initFirebase()
         if (AUTH.currentUser != null) {
             toolbar = binding.mainToolbar
+            chatToolbarBinding = binding.chatToolbar
             setSupportActionBar(toolbar)
             initializeUser {
                 CoroutineScope(Dispatchers.IO).launch {

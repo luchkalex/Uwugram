@@ -90,4 +90,8 @@
     <string name="drawer_item_invite_friends">Invite friends</string>
     <string name="drawer_item_faq">FAQ</string>
 
+    <!--  Chat fragment  -->
+    <string name="input_message_hint">Type message</string>
+    <string name="send_message_button_cd">Send message button</string>
+
 </resources>

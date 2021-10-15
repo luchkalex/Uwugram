@@ -19,7 +19,7 @@
             android:id="@+id/settingsProfileImage"
             style="@style/circle_avatar_style"
             android:src="@drawable/default_avatar"
-            app:civ_border_width="@dimen/zero_size"
+            app:civ_border_width="@dimen/expand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -22,6 +22,7 @@ import com.uwugram.R
 import com.uwugram.utils.MAIN_ACTIVITY
 import com.uwugram.utils.USER
 import com.uwugram.utils.downloadAndSetImage
+import com.uwugram.utils.hideKeyboard
 
 
 class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
@@ -45,6 +46,7 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         toolbar.setNavigationOnClickListener {
             MAIN_ACTIVITY.navController.popBackStack()
+            hideKeyboard(MAIN_ACTIVITY)
         }
     }
 
