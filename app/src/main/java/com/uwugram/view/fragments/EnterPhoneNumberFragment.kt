@@ -36,6 +36,7 @@ class EnterPhoneNumberFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initFirebase()
+        binding.loaderAnimation.visibility = View.GONE
         callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
 
@@ -43,6 +44,8 @@ class EnterPhoneNumberFragment : Fragment() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 showShortToast(p0.message.toString())
+                binding.loaderAnimation.visibility = View.GONE
+                binding.enterPhoneContainer.visibility = View.VISIBLE
             }
 
             override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
@@ -69,6 +72,8 @@ class EnterPhoneNumberFragment : Fragment() {
     }
 
     private fun authUser() {
+        binding.loaderAnimation.visibility = View.VISIBLE
+        binding.enterPhoneContainer.visibility = View.GONE
         activity?.let {
             PhoneAuthProvider.verifyPhoneNumber(
                 PhoneAuthOptions.newBuilder(AUTH)

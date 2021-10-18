@@ -8,3 +8,7 @@ fun String.asTime(): String {
     val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     return timeFormat.format(time)
 }
+
+fun String.log() {
+    System.err.println("\nLOG: $this\n")
+}

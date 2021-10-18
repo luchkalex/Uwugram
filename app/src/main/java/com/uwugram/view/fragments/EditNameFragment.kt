@@ -28,7 +28,7 @@ class EditNameFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         activity?.title = getString(R.string.edit_name_activity_title)
-
+        binding.loaderAnimation.visibility = View.GONE
         initInputFieldsText()
 
         binding.editNameConfirmFab.setOnClickListener { updateName() }
@@ -48,6 +48,8 @@ class EditNameFragment : Fragment() {
             showShortToast(getString(R.string.edit_name_name_required_message))
         } else {
             fullName = "$fullName ${binding.editSurnameInputField.text.toString()}"
+            binding.loaderAnimation.visibility = View.VISIBLE
+            binding.editNameContainer.visibility = View.GONE
             REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_FULLNAME)
                 .setValue(fullName).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -61,6 +63,10 @@ class EditNameFragment : Fragment() {
                             MAIN_ACTIVITY.navController.popBackStack()
                         }
                     }
+                }.addOnFailureListener {
+                    binding.loaderAnimation.visibility = View.GONE
+                    binding.editNameContainer.visibility = View.VISIBLE
+                    showShortToast(it.message.toString())
                 }
         }
     }
@@ -76,6 +82,10 @@ class EditNameFragment : Fragment() {
                     .addOnSuccessListener {
                         showShortToast(getString(R.string.login_welcome_message))
                         (activity as LoginActivity).replaceActivity(MainActivity())
+                    }.addOnFailureListener {
+                        binding.loaderAnimation.visibility = View.GONE
+                        binding.editNameContainer.visibility = View.VISIBLE
+                        showShortToast(it.message.toString())
                     }
             }
     }

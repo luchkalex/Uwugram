@@ -35,6 +35,7 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
     override fun onStart() {
         super.onStart()
         activity?.title = getString(R.string.contacts_activity_title)
+        binding.loaderAnimation.visibility = View.VISIBLE
         initRecyclerView()
     }
 
@@ -59,8 +60,9 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
                     .apply {
                         addValueEventListener(AppValueEventListener {
                             it.getUserModel().apply {
+                                binding.loaderAnimation.visibility = View.GONE
                                 holder.name.text = model.fullName
-                                holder.status.text = status
+                                holder.state.text = state
                                 holder.photo.downloadAndSetImage(photoURL)
                                 holder.itemView.setOnClickListener {
                                     MAIN_ACTIVITY.navController.navigate(
@@ -92,7 +94,7 @@ class ContactsFragment : AbstractFragment(R.layout.fragment_contacts) {
 
     class ContactsHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.contact_fullname)
-        val status: TextView = view.findViewById(R.id.contact_status)
+        val state: TextView = view.findViewById(R.id.contact_status)
         val photo: CircleImageView = view.findViewById(R.id.contactPhoto)
     }
 }

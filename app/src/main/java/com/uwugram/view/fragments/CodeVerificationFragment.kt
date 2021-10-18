@@ -33,9 +33,13 @@ class CodeVerificationFragment : Fragment() {
             if (binding.codeVerificationInputField.text.toString().length == 6)
                 onEnterCode()
         })
+        binding.loaderAnimation.visibility = View.GONE
     }
 
     private fun onEnterCode() {
+        binding.loaderAnimation.visibility = View.VISIBLE
+        binding.codeVerificationContainer.visibility = View.GONE
+
         val code = binding.codeVerificationInputField.text.toString()
         val id = arguments?.getString("id").toString()
         val phoneNumber = arguments?.getString("phoneNumber").toString()
@@ -62,13 +66,9 @@ class CodeVerificationFragment : Fragment() {
                                 id = UID,
                                 phone = phoneNumber,
                             )
-//                            replaceFragment(
-//                                R.id.loginFragmentContainer,
-//                                EditNameFragment(initial = true)
-//                            )
                             (activity as LoginActivity).navController
                                 .navigate(
-                                    R.id.action_codeVerificationFragment_to_editNameFragment2,
+                                    R.id.action_codeVerificationFragment_to_editNameFragment,
                                     Bundle().apply {
                                         putBoolean("initial", true)
                                     })
@@ -76,6 +76,8 @@ class CodeVerificationFragment : Fragment() {
                         }
                     })
             } else {
+                binding.loaderAnimation.visibility = View.GONE
+                binding.codeVerificationContainer.visibility = View.VISIBLE
                 showShortToast(getString(R.string.code_verification_wrong_code_message))
                 binding.codeVerificationInputField.setText("")
             }

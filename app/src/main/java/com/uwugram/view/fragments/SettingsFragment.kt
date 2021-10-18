@@ -31,7 +31,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
         setHasOptionsMenu(true)
         activity?.title = getString(R.string.settings_activity_title)
         binding.settingsFullName.text = USER.fullName
-        binding.activeStatus.text = USER.status
+        binding.activeStatus.text = USER.state
         binding.settingsPhoneText.text = USER.phone
         binding.settingsBioText.text = USER.bio
 

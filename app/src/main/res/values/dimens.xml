@@ -2,6 +2,8 @@
 <resources>
     <dimen name="expand">0dp</dimen>
 
+    <dimen name="loader_animation_size">100dp</dimen>
+
     <dimen name="default_horizontal_margin">16dp</dimen>
     <dimen name="default_vertical_margin">16dp</dimen>
     <dimen name="small_vertical_margin">8dp</dimen>

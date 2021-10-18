@@ -40,6 +40,8 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
     override fun onStart() {
         super.onStart()
 
+        binding.loaderAnimation.visibility = View.VISIBLE
+        binding.inputMessage.isEnabled = false
         contactId = arguments?.getString("id") ?: ""
 
         binding.sendButton.setOnClickListener {
@@ -52,7 +54,6 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
                 }
             }
         }
-
         initToolbar(contactId)
         initRecyclerView()
     }
@@ -66,6 +67,8 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
             listMessages = dataSnapshot.children.map { it.getMessageModel() }
             adapter.setList(listMessages)
             recyclerView.smoothScrollToPosition(adapter.itemCount)
+            binding.loaderAnimation.visibility = View.GONE
+            binding.inputMessage.isEnabled = true
         }
         refMessages.addValueEventListener(messagesListener)
     }
@@ -92,7 +95,7 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
     private fun initInfoToolbar() {
         MAIN_ACTIVITY.chatToolbarBinding.profileImage.downloadAndSetImage(receivingUser.photoURL)
         MAIN_ACTIVITY.chatToolbarBinding.settingsFullName.text = receivingUser.fullName
-        MAIN_ACTIVITY.chatToolbarBinding.activeStatus.text = receivingUser.status
+        MAIN_ACTIVITY.chatToolbarBinding.activeStatus.text = receivingUser.state
     }
 
     override fun onStop() {

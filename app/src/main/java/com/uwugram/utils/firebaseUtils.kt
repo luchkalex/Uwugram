@@ -43,7 +43,7 @@ const val FIELD_TYPE = "type"
 const val FIELD_TIMESTAMP = "timestamp"
 
 
-enum class Statuses(val value: String) {
+enum class States(val value: String) {
     ONLINE("online"),
     OFFLINE("offline"),
 }
@@ -90,6 +90,10 @@ inline fun initializeUser(crossinline onComplete: () -> Unit) {
             USER = it.getValue(USER::class.java) ?: User()
             onComplete()
         })
+}
+
+fun isUserInitialized(): Boolean {
+    return USER.id.isNotEmpty()
 }
 
 fun initContacts() {
@@ -151,7 +155,7 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
     })
 }
 
-fun updateUserStatus(status: Statuses) {
+fun updateUserStatus(status: States) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATE)
         .setValue(status.value)
 }

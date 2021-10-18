@@ -24,7 +24,7 @@
         android:label="fragment_code_verification"
         tools:layout="@layout/fragment_code_verification">
         <action
-            android:id="@+id/action_codeVerificationFragment_to_editNameFragment2"
+            android:id="@+id/action_codeVerificationFragment_to_editNameFragment"
             app:destination="@id/editNameFragment2"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -40,7 +40,7 @@
         android:label="fragment_edit_name"
         tools:layout="@layout/fragment_edit_name">
         <action
-            android:id="@+id/action_editNameFragment2_to_codeVerificationFragment"
+            android:id="@+id/action_editNameFragment_to_codeVerificationFragment"
             app:destination="@id/codeVerificationFragment" />
     </fragment>
 </navigation>

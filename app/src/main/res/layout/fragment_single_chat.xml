@@ -18,6 +18,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/message_item" />
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loader_animation"
+        android:layout_width="@dimen/loader_animation_size"
+        android:layout_height="@dimen/loader_animation_size"
+        android:src="@drawable/app_loader_animation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/input_message_container"
         android:layout_width="@dimen/expand"
