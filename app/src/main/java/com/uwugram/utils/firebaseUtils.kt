@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.uwugram.R
 import com.uwugram.model.Message
 import com.uwugram.model.User
 import java.util.*
@@ -46,6 +47,25 @@ const val FIELD_TIMESTAMP = "timestamp"
 enum class States(val value: String) {
     ONLINE("online"),
     OFFLINE("offline"),
+    NONE("none");
+
+    companion object {
+        fun getStringFromState(state: States): String {
+            return when (state) {
+                ONLINE -> MAIN_ACTIVITY.getString(R.string.online_status)
+                OFFLINE -> MAIN_ACTIVITY.getString(R.string.offline_status)
+                NONE -> "none"
+            }
+        }
+
+        fun getStateFromString(string: String): States {
+            return when (string) {
+                ONLINE.value -> ONLINE
+                OFFLINE.value -> OFFLINE
+                else -> NONE
+            }
+        }
+    }
 }
 
 enum class MessageTypes(val value: String) {
@@ -156,9 +176,8 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
 }
 
 fun updateUserState(status: States) {
-    if (AUTH.currentUser != null)
-        REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATE)
-            .setValue(status.value)
+    REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATE)
+        .setValue(status.value)
 }
 
 fun DataSnapshot.getUserModel(): User = getValue(User::class.java) ?: User()

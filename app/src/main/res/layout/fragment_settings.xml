@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@+id/activeStatus"
             app:layout_constraintLeft_toRightOf="@+id/settingsProfileImage"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/settings_default_username_text" />
+            tools:text="Name" />
 
         <TextView
             android:id="@+id/activeStatus"
@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/settingsProfileImage"
             app:layout_constraintTop_toBottomOf="@+id/settingsFullName"
-            tools:text="@string/settings_default_active_status" />
+            tools:text="online" />
 
         <View
             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/settings_phone_helper_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/settings_default_phone_number" />
+                tools:text="+38080808182" />
 
             <TextView
                 android:id="@+id/settings_phone_helper_text"
