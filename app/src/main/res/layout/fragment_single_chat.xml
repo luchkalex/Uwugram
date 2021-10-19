@@ -10,7 +10,7 @@
         android:id="@+id/chat_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/expand"
-        android:padding="@dimen/default_padding"
+        android:layout_marginHorizontal="@dimen/small_horizontal_margin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/input_message_container"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,10 +23,36 @@
         android:layout_width="@dimen/loader_animation_size"
         android:layout_height="@dimen/loader_animation_size"
         android:src="@drawable/app_loader_animation"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/no_messages_message"
+            style="@style/normal_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxWidth="300dp"
+            android:text="@string/no_messages_message"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/input_message_container"
@@ -56,10 +82,10 @@
 
         <ImageView
             android:id="@+id/send_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/send_icon_size"
+            android:layout_height="@dimen/send_icon_size"
             android:contentDescription="@string/send_message_button_cd"
-            android:src="@drawable/ic_baseline_send_24"
+            android:src="@android:drawable/ic_menu_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/colorAccentDark" />

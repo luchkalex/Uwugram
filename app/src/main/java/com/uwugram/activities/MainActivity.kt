@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -30,6 +29,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initialize()
     }
+
+    override fun onStart() {
+        super.onStart()
+        updateUserState(States.ONLINE)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        updateUserState(States.OFFLINE)
+    }
+
 
     private fun initialize() {
         MAIN_ACTIVITY = this
@@ -47,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 val navHostFragment =
                     supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
                 navController = navHostFragment.navController
-                if (navController.currentDestination != navController.graph[R.id.chatFragment]) {
+                if (navController.currentDestination != navController.graph[R.id.mainScreenFragment]) {
                     appDrawer.disableDrawer()
                 }
             }

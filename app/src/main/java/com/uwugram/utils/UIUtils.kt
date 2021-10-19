@@ -3,6 +3,8 @@ package com.uwugram.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
@@ -39,6 +41,16 @@ fun ImageView.downloadAndSetImage(photoURL: String) {
         .load(photoURL)
         .placeholder(R.drawable.default_avatar)
         .into(this)
+}
+
+fun View.fadeIn() {
+    startAnimation(AnimationUtils.loadAnimation(MAIN_ACTIVITY, R.anim.fade_in))
+    visibility = View.VISIBLE
+}
+
+fun View.fadeOut() {
+    startAnimation(AnimationUtils.loadAnimation(MAIN_ACTIVITY, R.anim.fade_out))
+    visibility = View.GONE
 }
 
 

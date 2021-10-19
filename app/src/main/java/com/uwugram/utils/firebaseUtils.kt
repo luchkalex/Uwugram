@@ -155,9 +155,10 @@ fun updatePhoneContacts(arrayContacts: ArrayList<User>) {
     })
 }
 
-fun updateUserStatus(status: States) {
-    REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATE)
-        .setValue(status.value)
+fun updateUserState(status: States) {
+    if (AUTH.currentUser != null)
+        REF_DATABASE_ROOT.child(NODE_USERS).child(USER.id).child(FIELD_USERS_STATE)
+            .setValue(status.value)
 }
 
 fun DataSnapshot.getUserModel(): User = getValue(User::class.java) ?: User()

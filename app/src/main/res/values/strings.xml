@@ -42,7 +42,7 @@
     <!--    Code verification fragment  -->
     <string name="code_verification_helper_text">Please enter verification code</string>
     <string name="code_verification_helper_text_2">We sent SMS with code on your phone number</string>
-    <string name="code_verification_hint_text">-- -- -- -- -- --</string>
+    <string name="code_verification_hint_text" translatable="false">-- -- -- -- -- --</string>
     <string name="code_verification_wrong_code_message">Wrong code</string>
 
     <!--    Enter phone fragment  -->
@@ -93,5 +93,8 @@
     <!--  Chat fragment  -->
     <string name="input_message_hint">Type message</string>
     <string name="send_message_button_cd">Send message button</string>
+    <string name="no_conversations_message">Still no conversations here\nTry to start a conversation in Contacts</string>
+    <string name="no_messages_message">Oh. You haven\'t written anything yet\nTry to text \'hello\' this will help to start dialogue</string>
+    <string name="no_contacts_message">Oh. So far, none of your contacts are registered in Uwugram\n Try to invite someone</string>
 
 </resources>

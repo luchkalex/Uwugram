@@ -26,7 +26,9 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var messagesListener: AppValueEventListener
     private lateinit var contactId: String
+    private var initialMessageRequest = true
     private var listMessages = emptyList<Message>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +58,7 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
         }
         initToolbar(contactId)
         initRecyclerView()
+        initialMessageRequest = true
     }
 
     private fun initRecyclerView() {
@@ -63,27 +66,44 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
         adapter = SingleChatAdapter()
         refMessages = REF_DATABASE_ROOT.child(NODE_MESSAGES).child(UID).child(contactId)
         recyclerView.adapter = adapter
-        messagesListener = AppValueEventListener { dataSnapshot ->
-            listMessages = dataSnapshot.children.map { it.getMessageModel() }
+        messagesListener = getMessagesListener()
+        refMessages.addValueEventListener(messagesListener)
+    }
+
+    private fun getMessagesListener() = AppValueEventListener { messages ->
+        if (messages.children.count() > 0) {
+            binding.noMessagesMessage.visibility = View.GONE
+            listMessages = messages.children.map { it.getMessageModel() }
             adapter.setList(listMessages)
             recyclerView.smoothScrollToPosition(adapter.itemCount)
             binding.loaderAnimation.visibility = View.GONE
             binding.inputMessage.isEnabled = true
+            if (initialMessageRequest) {
+                binding.chatRecyclerView.fadeIn()
+                binding.loaderAnimation.fadeOut()
+                initialMessageRequest = false
+            }
+        } else {
+            binding.inputMessage.isEnabled = true
+            binding.noMessagesMessage.visibility = View.VISIBLE
+            binding.noMessagesMessage.fadeIn()
+            binding.loaderAnimation.fadeOut()
         }
-        refMessages.addValueEventListener(messagesListener)
+
+
     }
 
     private fun initToolbar(contactId: String) {
         MAIN_ACTIVITY.toolbar[0].visibility = View.VISIBLE
+
         listenerInfoToolbar = AppValueEventListener { dataSnapshot ->
             receivingUser = dataSnapshot.getUserModel()
             REF_DATABASE_ROOT.child(NODE_PHONE_CONTACTS).child(UID).child(contactId).child(
                 FIELD_USERS_FULLNAME
-            )
-                .addListenerForSingleValueEvent(AppValueEventListener {
-                    receivingUser.fullName = it.getValue(String::class.java).toString()
-                    initInfoToolbar()
-                })
+            ).addListenerForSingleValueEvent(AppValueEventListener {
+                receivingUser.fullName = it.value.toString()
+                updateToolbar()
+            })
         }
 
         refUser = REF_DATABASE_ROOT.child(NODE_USERS).child(contactId)
@@ -92,7 +112,7 @@ class SingleChatFragment : AbstractFragment(R.layout.fragment_single_chat) {
     }
 
 
-    private fun initInfoToolbar() {
+    private fun updateToolbar() {
         MAIN_ACTIVITY.chatToolbarBinding.profileImage.downloadAndSetImage(receivingUser.photoURL)
         MAIN_ACTIVITY.chatToolbarBinding.settingsFullName.text = receivingUser.fullName
         MAIN_ACTIVITY.chatToolbarBinding.activeStatus.text = receivingUser.state

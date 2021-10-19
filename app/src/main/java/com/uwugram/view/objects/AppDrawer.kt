@@ -69,7 +69,8 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
             .addDrawerItems(
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_new_group),
-                    R.drawable.ic_menu_create_groups
+                    R.drawable.ic_menu_create_groups,
+                    false
                 ),
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_contacts),
@@ -77,11 +78,13 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                 ),
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_calls),
-                    R.drawable.ic_menu_phone
+                    R.drawable.ic_menu_phone,
+                    false
                 ),
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_saved_messages),
-                    R.drawable.ic_menu_favorites
+                    R.drawable.ic_menu_favorites,
+                    false
                 ),
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_settings),
@@ -90,11 +93,13 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                 DividerDrawerItem(),
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_invite_friends),
-                    R.drawable.ic_menu_invate
+                    R.drawable.ic_menu_invate,
+                    false
                 ),
                 createPrimaryDrawerItem(
                     activity.getString(R.string.drawer_item_faq),
-                    R.drawable.ic_menu_help
+                    R.drawable.ic_menu_help,
+                    false
                 ),
             ).withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                 override fun onItemClick(
@@ -104,9 +109,9 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
                 ): Boolean {
                     when (position) {
                         2 -> MAIN_ACTIVITY.navController
-                            .navigate(R.id.action_chatFragment_to_contactsFragment)
+                            .navigate(R.id.action_mainScreenFragment_to_contactsFragment)
                         5 -> MAIN_ACTIVITY.navController
-                            .navigate(R.id.action_chatFragment_to_settingsFragment)
+                            .navigate(R.id.action_mainScreenFragment_to_settingsFragment)
                     }
                     return false
                 }
@@ -114,13 +119,18 @@ class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
             .build()
     }
 
-    private fun createPrimaryDrawerItem(name: String, @DrawableRes icon: Int): PrimaryDrawerItem {
+    private fun createPrimaryDrawerItem(
+        name: String,
+        @DrawableRes icon: Int,
+        enabled: Boolean = true
+    ): PrimaryDrawerItem {
         return PrimaryDrawerItem()
             .withIdentifier(primaryDrawerItemID++)
             .withIconTintingEnabled(true)
             .withName(name)
             .withIcon(icon)
             .withSelectable(false)
+            .withEnabled(enabled)
     }
 
     private fun createHeader() {

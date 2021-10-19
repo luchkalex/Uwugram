@@ -3,22 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chatFragment">
+    app:startDestination="@id/mainScreenFragment">
 
     <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.uwugram.view.fragments.ChatFragment"
-        android:label="ChatFragment">
+        android:id="@+id/mainScreenFragment"
+        android:name="com.uwugram.view.fragments.chats.MainScreenFragment"
+        android:label="MainScreenFragment">
         <action
-            android:id="@+id/action_chatFragment_to_settingsFragment"
+            android:id="@+id/action_mainScreenFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
         <action
-            android:id="@+id/action_chatFragment_to_contactsFragment"
+            android:id="@+id/action_mainScreenFragment_to_contactsFragment"
             app:destination="@id/contactsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_singleChatFragment"
+            app:destination="@id/singleChatFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
@@ -51,8 +58,8 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
         <action
-            android:id="@+id/action_settingsFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            android:id="@+id/action_settingsFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/editUsernameFragment"
@@ -83,12 +90,12 @@
     </fragment>
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.uwugram.view.fragments.ContactsFragment"
+        android:name="com.uwugram.view.fragments.contacts.ContactsFragment"
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts">
         <action
-            android:id="@+id/action_contactsFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            android:id="@+id/action_contactsFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
         <action
             android:id="@+id/action_contactsFragment_to_singleChatFragment"
             app:destination="@id/singleChatFragment"
@@ -105,5 +112,8 @@
         <action
             android:id="@+id/action_singleChatFragment_to_contactsFragment"
             app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_singleChatFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
     </fragment>
 </navigation>
