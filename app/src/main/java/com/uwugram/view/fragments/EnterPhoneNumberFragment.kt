@@ -7,21 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
+import com.uwugram.database.sendVerificationCode
 import com.uwugram.databinding.FragmentEnterPhoneNumberBinding
-import com.uwugram.utils.AUTH
-import com.uwugram.utils.initFirebase
 import com.uwugram.utils.showShortToast
-import java.util.concurrent.TimeUnit
 
 class EnterPhoneNumberFragment : Fragment() {
 
-    private var _binding: FragmentEnterPhoneNumberBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var callback: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private lateinit var binding: FragmentEnterPhoneNumberBinding
     private lateinit var phoneNumber: String
 
     override fun onCreateView(
@@ -29,15 +24,16 @@ class EnterPhoneNumberFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentEnterPhoneNumberBinding.inflate(inflater, container, false)
+        binding = FragmentEnterPhoneNumberBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        initFirebase()
+
         binding.loaderAnimation.visibility = View.GONE
-        callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+        val callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
 
             }
@@ -58,31 +54,18 @@ class EnterPhoneNumberFragment : Fragment() {
                         })
             }
         }
-        binding.enterPhoneConfirmFab.setOnClickListener { sendCode() }
+        binding.enterPhoneConfirmFab.setOnClickListener { sendCode(callback) }
     }
 
-    private fun sendCode() {
+    private fun sendCode(callback: PhoneAuthProvider.OnVerificationStateChangedCallbacks) {
         phoneNumber =
             getString(R.string.enter_phone_default_ukraine_country_code) + binding.enterPhoneInputField.text.toString()
         if (phoneNumber.length < 13) {
             showShortToast(getString(R.string.enter_phone_number_too_short_message))
         } else {
-            authUser()
-        }
-    }
-
-    private fun authUser() {
-        binding.loaderAnimation.visibility = View.VISIBLE
-        binding.enterPhoneContainer.visibility = View.GONE
-        activity?.let {
-            PhoneAuthProvider.verifyPhoneNumber(
-                PhoneAuthOptions.newBuilder(AUTH)
-                    .setPhoneNumber(phoneNumber)
-                    .setTimeout(60, TimeUnit.SECONDS)
-                    .setActivity(it)
-                    .setCallbacks(callback)
-                    .build()
-            )
+            binding.loaderAnimation.visibility = View.VISIBLE
+            binding.enterPhoneContainer.visibility = View.GONE
+            sendVerificationCode(phoneNumber, callback)
         }
     }
 }

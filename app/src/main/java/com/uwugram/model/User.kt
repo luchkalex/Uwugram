@@ -1,7 +1,5 @@
 package com.uwugram.model
 
-import com.uwugram.utils.States
-
 data class User(
     var id: String = "",
     var phone: String = "",

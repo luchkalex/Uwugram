@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.uwugram.R
+import com.uwugram.database.initFirebase
 import com.uwugram.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initialize() {
+        initFirebase()
         toolbar = binding.loginToolbar
         setSupportActionBar(toolbar)
         title = getString(R.string.login_activity_title)

@@ -7,8 +7,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.get
 import com.uwugram.R
+import com.uwugram.database.*
 import com.uwugram.databinding.ActivityMainBinding
 import com.uwugram.databinding.ChatToolbarBinding
+import com.uwugram.model.States
 import com.uwugram.utils.*
 import com.uwugram.view.objects.AppDrawer
 import kotlinx.coroutines.CoroutineScope

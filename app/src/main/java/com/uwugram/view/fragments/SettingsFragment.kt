@@ -8,28 +8,30 @@ import android.view.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
+import com.uwugram.database.*
 import com.uwugram.databinding.FragmentSettingsBinding
-import com.uwugram.utils.*
+import com.uwugram.utils.MAIN_ACTIVITY
+import com.uwugram.utils.downloadAndSetImage
+import com.uwugram.utils.replaceActivity
+import com.uwugram.utils.showShortToast
 
 class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
-    private var _binding: FragmentSettingsBinding? = null
-
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         setHasOptionsMenu(true)
-        activity?.title = getString(R.string.settings_activity_title)
+        MAIN_ACTIVITY.title = getString(R.string.settings_activity_title)
         binding.settingsFullName.text = USER.fullName
         binding.activeStatus.text = USER.state
         binding.settingsPhoneText.text = USER.phone
@@ -73,7 +75,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
             putImageToStorage(uri, storageRef) {
                 getImageUrl(storageRef) { url ->
-                    savePhotoUrlToDataBase(url) {
+                    updatePhotoUrl(url) {
                         binding.settingsProfileImage.downloadAndSetImage(url.toString())
                         MAIN_ACTIVITY.appDrawer.updateHeader()
                         MAIN_ACTIVITY.showShortToast(getString(R.string.settings_image_updated_message))
@@ -86,7 +88,7 @@ class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        activity?.menuInflater?.inflate(R.menu.settings_menu, menu)
+        MAIN_ACTIVITY.menuInflater.inflate(R.menu.settings_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

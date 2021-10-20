@@ -8,30 +8,34 @@ import androidx.fragment.app.Fragment
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
+import com.uwugram.database.USER
+import com.uwugram.database.singUp
+import com.uwugram.database.updateName
 import com.uwugram.databinding.FragmentEditNameBinding
-import com.uwugram.utils.*
+import com.uwugram.utils.MAIN_ACTIVITY
+import com.uwugram.utils.hideKeyboard
+import com.uwugram.utils.replaceActivity
+import com.uwugram.utils.showShortToast
 
 class EditNameFragment : Fragment() {
 
-    private var _binding: FragmentEditNameBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentEditNameBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentEditNameBinding.inflate(inflater, container, false)
+        binding = FragmentEditNameBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        activity?.title = getString(R.string.edit_name_activity_title)
+        MAIN_ACTIVITY.title = getString(R.string.edit_name_activity_title)
         binding.loaderAnimation.visibility = View.GONE
+        binding.editNameConfirmFab.setOnClickListener { setNewName() }
         initInputFieldsText()
-
-        binding.editNameConfirmFab.setOnClickListener { updateName() }
     }
 
     private fun initInputFieldsText() {
@@ -40,53 +44,46 @@ class EditNameFragment : Fragment() {
         if (fullNameList.size > 1) binding.editSurnameInputField.setText(fullNameList[1])
     }
 
-    private fun updateName() {
-        var fullName = binding.editNameInputField.text.toString()
+    private fun setNewName() {
+        val oldName = USER.fullName
+        val fullName = binding.editNameInputField.text.toString()
         val initial = arguments?.getBoolean("initial") ?: false
 
         if (fullName.isEmpty()) {
             showShortToast(getString(R.string.edit_name_name_required_message))
         } else {
-            fullName = "$fullName ${binding.editSurnameInputField.text.toString()}"
+            USER.fullName = "$fullName ${binding.editSurnameInputField.text.toString()}"
             binding.loaderAnimation.visibility = View.VISIBLE
             binding.editNameContainer.visibility = View.GONE
-            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_FULLNAME)
-                .setValue(fullName).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        USER.fullName = fullName
-                        if (initial) {
-                            initialSaveDataToDB()
-                        } else {
-                            MAIN_ACTIVITY.appDrawer.updateHeader()
-                            showShortToast(getString(R.string.edit_name_name_updated_message))
-                            activity?.let { hideKeyboard(it) }
-                            MAIN_ACTIVITY.navController.popBackStack()
-                        }
-                    }
-                }.addOnFailureListener {
-                    binding.loaderAnimation.visibility = View.GONE
-                    binding.editNameContainer.visibility = View.VISIBLE
-                    showShortToast(it.message.toString())
-                }
-        }
-    }
 
-    private fun initialSaveDataToDB() {
-        val dataMap = mutableMapOf<String, Any>()
-        dataMap[FIELD_USERS_ID] = UID
-        dataMap[FIELD_USERS_PHONE] = USER.phone
-        REF_DATABASE_ROOT.child(NODE_PHONE).child(USER.phone).setValue(UID)
-            .addOnSuccessListener {
-                REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
-                    .updateChildren(dataMap)
-                    .addOnSuccessListener {
+            if (initial) {
+                singUp(
+                    onSuccess = {
                         showShortToast(getString(R.string.login_welcome_message))
                         (activity as LoginActivity).replaceActivity(MainActivity())
-                    }.addOnFailureListener {
+                    },
+                    onFailure = { message ->
                         binding.loaderAnimation.visibility = View.GONE
                         binding.editNameContainer.visibility = View.VISIBLE
-                        showShortToast(it.message.toString())
+                        showShortToast(message)
                     }
+                )
+            } else {
+                updateName(
+                    onSuccess = {
+                        MAIN_ACTIVITY.appDrawer.updateHeader()
+                        showShortToast(getString(R.string.edit_name_name_updated_message))
+                        activity?.let { hideKeyboard(it) }
+                        MAIN_ACTIVITY.navController.popBackStack()
+                    },
+                    onFailure = { message ->
+                        binding.loaderAnimation.visibility = View.GONE
+                        binding.editNameContainer.visibility = View.VISIBLE
+                        USER.fullName = oldName
+                        showShortToast(message)
+                    }
+                )
             }
+        }
     }
 }

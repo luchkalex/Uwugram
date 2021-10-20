@@ -19,13 +19,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.uwugram.R
+import com.uwugram.database.USER
 import com.uwugram.utils.MAIN_ACTIVITY
-import com.uwugram.utils.USER
 import com.uwugram.utils.downloadAndSetImage
 import com.uwugram.utils.hideKeyboard
 
 
-class AppDrawer(val activity: AppCompatActivity, private val toolbar: Toolbar) {
+class AppDrawer(private val activity: AppCompatActivity, private val toolbar: Toolbar) {
 
     private lateinit var drawer: Drawer
     private lateinit var header: AccountHeader

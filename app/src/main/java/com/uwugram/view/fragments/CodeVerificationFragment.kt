@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.PhoneAuthProvider
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
 import com.uwugram.activities.MainActivity
+import com.uwugram.database.UID
+import com.uwugram.database.USER
 import com.uwugram.databinding.FragmentCodeVerificationBinding
 import com.uwugram.model.User
-import com.uwugram.utils.*
+import com.uwugram.utils.AppTextWatcher
+import com.uwugram.utils.replaceActivity
+import com.uwugram.utils.showShortToast
 
 class CodeVerificationFragment : Fragment() {
 
@@ -31,56 +34,47 @@ class CodeVerificationFragment : Fragment() {
         super.onStart()
         binding.codeVerificationInputField.addTextChangedListener(AppTextWatcher {
             if (binding.codeVerificationInputField.text.toString().length == 6)
-                onEnterCode()
+                verifyCode()
         })
         binding.loaderAnimation.visibility = View.GONE
     }
 
-    private fun onEnterCode() {
+    private fun verifyCode() {
         binding.loaderAnimation.visibility = View.VISIBLE
         binding.codeVerificationContainer.visibility = View.GONE
 
-        val code = binding.codeVerificationInputField.text.toString()
+        val verificationCode = binding.codeVerificationInputField.text.toString()
         val id = arguments?.getString("id").toString()
         val phoneNumber = arguments?.getString("phoneNumber").toString()
+        val loginActivity = (activity as LoginActivity)
 
-        val credential = PhoneAuthProvider.getCredential(id, code)
-        AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                UID = AUTH.currentUser?.uid.toString()
+        com.uwugram.database.verifyCode(
+            id,
+            verificationCode,
+            onSignIn = {
+                USER.id = UID
+                loginActivity.showShortToast(loginActivity.getString(R.string.login_welcome_back_message))
+                loginActivity.replaceActivity(MainActivity())
+            },
+            onSignUp = {
+                USER = User(
+                    id = UID,
+                    phone = phoneNumber,
+                )
+                loginActivity.navController
+                    .navigate(
+                        R.id.action_codeVerificationFragment_to_editNameFragment,
+                        Bundle().apply {
+                            putBoolean("initial", true)
+                        })
 
-                REF_DATABASE_ROOT.child(NODE_USERS)
-                    .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
-                        if (snapshot.hasChild(UID)) {
-                            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(FIELD_USERS_STATE)
-                                .setValue(getString(R.string.online_status))
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        USER.id = UID
-                                        showShortToast(getString(R.string.login_welcome_back_message))
-                                        (activity as LoginActivity).replaceActivity(MainActivity())
-                                    }
-                                }
-                        } else {
-                            USER = User(
-                                id = UID,
-                                phone = phoneNumber,
-                            )
-                            (activity as LoginActivity).navController
-                                .navigate(
-                                    R.id.action_codeVerificationFragment_to_editNameFragment,
-                                    Bundle().apply {
-                                        putBoolean("initial", true)
-                                    })
-
-                        }
-                    })
-            } else {
+            },
+            onWrongCode = {
                 binding.loaderAnimation.visibility = View.GONE
                 binding.codeVerificationContainer.visibility = View.VISIBLE
                 showShortToast(getString(R.string.code_verification_wrong_code_message))
                 binding.codeVerificationInputField.setText("")
             }
-        }
+        )
     }
 }

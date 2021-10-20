@@ -1,5 +1,7 @@
 package com.uwugram.utils
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -10,5 +12,11 @@ fun String.asTime(): String {
 }
 
 fun String.log() {
-    System.err.println("\nLOG: $this\n")
+    println("\nLOG: $this\n")
+}
+
+fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
+    val intent = Intent(this, activity::class.java)
+    startActivity(intent)
+    this.finish()
 }
