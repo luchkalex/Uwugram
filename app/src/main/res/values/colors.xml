@@ -8,6 +8,11 @@
     <color name="colorBlack">#000000</color>
     <color name="transparent">#00000000</color>
 
+
+    <color name="selfMessagesBackgroundColor">#2B2B2B</color>
+    <color name="otherMessagesBackgroundColor">#454545</color>
+
+
     <!-- Text Colors   -->
     <color name="colorNormalText">@color/colorPrimaryDark</color>
     <color name="colorFadedText">@color/colorFadedPrimary</color>

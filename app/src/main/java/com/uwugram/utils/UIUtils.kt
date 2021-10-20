@@ -2,13 +2,17 @@ package com.uwugram.utils
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginBottom
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import com.uwugram.R
@@ -19,12 +23,6 @@ fun Fragment.showShortToast(message: String) {
 
 fun AppCompatActivity.showShortToast(message: String) {
     let { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
-}
-
-fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
-    val intent = Intent(this, activity::class.java)
-    startActivity(intent)
-    this.finish()
 }
 
 
@@ -51,6 +49,20 @@ fun View.fadeIn() {
 fun View.fadeOut() {
     startAnimation(AnimationUtils.loadAnimation(MAIN_ACTIVITY, R.anim.fade_out))
     visibility = View.GONE
+}
+
+fun setMargins(
+    v: View,
+    l: Int = v.marginLeft,
+    t: Int = v.marginTop,
+    r: Int = v.marginRight,
+    b: Int = v.marginBottom
+) {
+    if (v.layoutParams is ViewGroup.MarginLayoutParams) {
+        val p = v.layoutParams as ViewGroup.MarginLayoutParams
+        p.setMargins(l, t, r, b)
+        v.requestLayout()
+    }
 }
 
 

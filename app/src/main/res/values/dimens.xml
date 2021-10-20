@@ -27,8 +27,7 @@
 
     <dimen name="single_message_margin">100dp</dimen>
     <dimen name="input_message_padding">12dp</dimen>
-    <dimen name="messages_vertical_margin">4dp</dimen>
+    <dimen name="messages_vertical_margin">6dp</dimen>
     <dimen name="send_icon_size">35dp</dimen>
-
 </resources>
 
