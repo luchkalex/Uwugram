@@ -4,9 +4,14 @@
     <color name="colorPrimaryDark">#242424</color>
     <color name="colorFadedPrimary">#5B5B5B</color>
     <color name="colorAccent">#FFFFFFFF</color>
-    <color name="colorAccentDark">#D7D7D7</color>
+    <color name="colorAccentDark">#E4E4E4</color>
     <color name="colorBlack">#000000</color>
     <color name="transparent">#00000000</color>
+
+
+    <color name="selfMessagesBackgroundColor">#2B2B2B</color>
+    <color name="otherMessagesBackgroundColor">#454545</color>
+
 
     <!-- Text Colors   -->
     <color name="colorNormalText">@color/colorPrimaryDark</color>

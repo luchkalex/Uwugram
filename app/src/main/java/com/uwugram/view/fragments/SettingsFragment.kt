@@ -8,29 +8,30 @@ import android.view.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.uwugram.R
 import com.uwugram.activities.LoginActivity
+import com.uwugram.database.*
 import com.uwugram.databinding.FragmentSettingsBinding
-import com.uwugram.utils.*
+import com.uwugram.utils.MAIN_ACTIVITY
+import com.uwugram.utils.downloadAndSetImage
+import com.uwugram.utils.replaceActivity
+import com.uwugram.utils.showShortToast
 
-class SettingsFragment : AbstractFragment() {
+class SettingsFragment : AbstractFragment(R.layout.fragment_settings) {
 
-    private var _binding: FragmentSettingsBinding? = null
-
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         setHasOptionsMenu(true)
-
-        activity?.title = getString(R.string.settings_activity_title)
+        MAIN_ACTIVITY.title = getString(R.string.settings_activity_title)
         binding.settingsFullName.text = USER.fullName
         binding.activeStatus.text = USER.state
         binding.settingsPhoneText.text = USER.phone
@@ -46,11 +47,11 @@ class SettingsFragment : AbstractFragment() {
         binding.settingsProfileImage.downloadAndSetImage(USER.photoURL)
 
         binding.settingsUsernameTile.setOnClickListener {
-            replaceFragment(R.id.fragmentContainer, EditUsernameFragment())
+            MAIN_ACTIVITY.navController.navigate(R.id.action_settingsFragment_to_editUsernameFragment)
         }
 
         binding.settingsBioTile.setOnClickListener {
-            replaceFragment(R.id.fragmentContainer, EditBioFragment())
+            MAIN_ACTIVITY.navController.navigate(R.id.action_settingsFragment_to_editBioFragment)
         }
 
         binding.settingsEditPhotoFab.setOnClickListener {
@@ -74,10 +75,10 @@ class SettingsFragment : AbstractFragment() {
 
             putImageToStorage(uri, storageRef) {
                 getImageUrl(storageRef) { url ->
-                    savePhotoUrlToDataBase(url) {
+                    updatePhotoUrl(url) {
                         binding.settingsProfileImage.downloadAndSetImage(url.toString())
-                        CHAT_ACTIVITY.appDrawer.updateHeader()
-                        showShortToast("Image updated")
+                        MAIN_ACTIVITY.appDrawer.updateHeader()
+                        MAIN_ACTIVITY.showShortToast(getString(R.string.settings_image_updated_message))
                         USER.photoURL = url.toString()
                     }
                 }
@@ -87,19 +88,17 @@ class SettingsFragment : AbstractFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        activity?.menuInflater?.inflate(R.menu.settings_menu, menu)
+        MAIN_ACTIVITY.menuInflater.inflate(R.menu.settings_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings_menu_edit_name -> {
-                replaceFragment(R.id.fragmentContainer, EditNameFragment())
+                MAIN_ACTIVITY.navController.navigate(R.id.action_settingsFragment_to_editNameFragment)
             }
             R.id.settings_menu_logout -> {
-                AppState.updateState(AppState.OFFLINE)
                 AUTH.signOut()
-                CHAT_ACTIVITY.replaceActivity(LoginActivity())
-                    .also { updateUserState(Signals.REPLACE) }
+                MAIN_ACTIVITY.replaceActivity(LoginActivity())
             }
             R.id.settings_menu_change_photo -> {
                 selectImage()

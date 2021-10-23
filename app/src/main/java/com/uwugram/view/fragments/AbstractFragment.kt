@@ -1,19 +1,13 @@
 package com.uwugram.view.fragments
 
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import com.uwugram.activities.ChatActivity
-import com.uwugram.activities.MainActivity
-import com.uwugram.utils.Signals
-import com.uwugram.utils.replaceActivity
-import com.uwugram.utils.updateUserState
+import com.uwugram.utils.MAIN_ACTIVITY
 
-abstract class AbstractFragment : Fragment() {
+abstract class AbstractFragment(layout: Int) : Fragment(layout) {
     override fun onStart() {
         super.onStart()
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            (activity as MainActivity).replaceActivity(ChatActivity())
-                .also { updateUserState(Signals.REPLACE) }
+        if (MAIN_ACTIVITY.isAppDrawerInitialized()) {
+            MAIN_ACTIVITY.appDrawer.disableDrawer()
         }
     }
 }
