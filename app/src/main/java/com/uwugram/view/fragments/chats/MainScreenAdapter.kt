@@ -21,7 +21,7 @@ class MainScreenAdapter : RecyclerView.Adapter<MainScreenAdapter.ChatHolder>() {
         setChatsCache.add(item)
         listChatsCache = setChatsCache.toMutableList()
         listChatsCache.sortByDescending { it.message.timestamp.toString() }
-        notifyDataSetChanged()
+        notifyItemInserted(listChatsCache.indexOf(item))
     }
 
     class ChatHolder(view: View) : RecyclerView.ViewHolder(view) {

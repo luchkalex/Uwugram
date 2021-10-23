@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uwugram.R
 import com.uwugram.database.UID
 import com.uwugram.model.Message
+import com.uwugram.utils.DiffMessagesUtilCallback
 import com.uwugram.utils.MAIN_ACTIVITY
 import com.uwugram.utils.asTime
 import com.uwugram.utils.setMargins
@@ -18,12 +20,24 @@ class SingleChatAdapter(private val contactID: String) :
     RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
     private var listMessagesCache = emptyList<Message>()
+    private lateinit var diffUtil: DiffUtil.DiffResult
 
-    fun setList(list: List<Message>) {
-        listMessagesCache = list
-        notifyItemInserted(itemCount)
-        notifyItemChanged(itemCount - 2)
+    fun addMessage(message: Message) {
+        val newList = mutableListOf<Message>()
+
+        newList.addAll(listMessagesCache)
+
+        if (!newList.contains(message)) {
+            newList.add(message)
+            newList.sortBy { it.timestamp.toString() }
+
+            diffUtil = DiffUtil.calculateDiff(DiffMessagesUtilCallback(listMessagesCache, newList))
+            diffUtil.dispatchUpdatesTo(this)
+            listMessagesCache = newList
+            notifyItemChanged(itemCount - 2)
+        }
     }
+
 
     class SingleChatHolder(view: View) : RecyclerView.ViewHolder(view) {
         val selfMessageContainer: ConstraintLayout = view.findViewById(R.id.self_message_container)

@@ -2,6 +2,7 @@ package com.uwugram.database
 
 import com.uwugram.model.Message
 import com.uwugram.model.User
+import com.uwugram.utils.AppChildEventListener
 import com.uwugram.utils.AppValueEventListener
 
 inline fun getContactsListListener(
@@ -75,13 +76,7 @@ inline fun getContactListener(
 }
 
 inline fun getMessagesListener(
-    crossinline onItemFound: (List<Message>) -> Unit,
-    crossinline onNoItemsFound: () -> Unit
-) = AppValueEventListener { messages ->
-    if (messages.children.count() > 0) {
-        val listMessages: List<Message> = messages.children.map { it.getMessageModel() }
-        onItemFound(listMessages)
-    } else {
-        onNoItemsFound()
-    }
+    crossinline onItemAdded: (Message) -> Unit,
+) = AppChildEventListener { message ->
+    onItemAdded(message.getMessageModel())
 }

@@ -287,3 +287,18 @@ fun sendVerificationCode(
             .build()
     )
 }
+
+fun getCurrentMessageCount(
+    contactId: String,
+    onNoMessagesFound: () -> Unit,
+    onComplete: (Int) -> Unit
+) {
+    REF_NODE_USER_MESSAGES.child(contactId)
+        .addListenerForSingleValueEvent(AppValueEventListener { messages ->
+            val messagesCount = messages.children.count()
+            if (messagesCount == 0) {
+                onNoMessagesFound()
+            }
+            onComplete(messagesCount)
+        })
+}

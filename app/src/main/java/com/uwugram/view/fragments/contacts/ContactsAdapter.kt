@@ -19,7 +19,7 @@ class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.ContactsHolder>() {
 
     fun updateListItem(item: User) {
         listContactsCache.add(item)
-        notifyDataSetChanged()
+        notifyItemInserted(itemCount)
     }
 
     class ContactsHolder(view: View) : RecyclerView.ViewHolder(view) {
