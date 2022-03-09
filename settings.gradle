@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Uwugram"
 include ':app'
+include ':domain'
+include ':data'

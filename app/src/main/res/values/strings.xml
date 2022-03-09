@@ -1,22 +1,20 @@
 <resources>
     <string name="app_name">Uwugram</string>
 
-    <string name="login_welcome_back_message">Welcome back</string>
-    <string name="login_welcome_message">Welcome</string>
-    <string name="permission_denied_message">Permission denied</string>
-
-    <!--  Activity titles  -->
-    <string name="login_activity_title">Your phone</string>
-    <string name="edit_name_activity_title">Edit name</string>
-    <string name="edit_username_activity_title">Edit username</string>
-    <string name="settings_activity_title">Settings</string>
-    <string name="contacts_activity_title">Contacts</string>
+    <!--  Appbar titles  -->
+    <string name="login_screen_appbar_title">Login</string>
+    <string name="code_verification_screen_appbar_title">Code verification</string>
+    <string name="edit_name_screen_appbar_title">Edit name</string>
+    <string name="edit_username_screen_appbar_title">Edit username</string>
+    <string name="settings_screen_appbar_title">Settings</string>
+    <string name="contacts_screen_appbar_title">Contacts</string>
+    <string name="edit_bio_screen_appbar_title">Bio</string>
 
     <!--    Statuses    -->
     <string name="online_status">online</string>
     <string name="offline_status">offline</string>
 
-    <!--    Settings fragment   -->
+    <!--    Settings screen   -->
     <string name="setting_account_text">Account</string>
     <string name="settings_phone_helper_text">Tap to change phone number</string>
     <string name="settings_username_helper_text">Username</string>
@@ -24,51 +22,48 @@
     <string name="settings_default_bio_text">Bio</string>
     <string name="settings_default_username_text">None</string>
     <string name="settings_change_photo_fab_cd">Change photo</string>
+    <string name="settings_menu_cd">Open menu</string>
+    <string name="settings_photo_cd">Photo</string>
     <string name="settings_menu_edit_name">Edit name</string>
     <string name="settings_menu_logout">Log out</string>
-    <string name="settings_menu_change_photo">Set new photo</string>
-    <string name="settings_image_updated_message">Image updated</string>
+    <string name="settings_menu_edit_name_cd">Edit name button</string>
+    <string name="settings_menu_logout_cd">Log out button</string>
 
-    <!--    Code verification fragment  -->
-    <string name="code_verification_helper_text">Please enter verification code</string>
-    <string name="code_verification_helper_text_2">We sent SMS with code on your phone number</string>
+    <!--    Code verification screen  -->
+    <string name="code_verification_helper_text">Please enter verification code. We have sent SMS with code on your phone number</string>
     <string name="code_verification_hint_text" translatable="false">-- -- -- -- -- --</string>
     <string name="code_verification_wrong_code_message">Wrong code</string>
 
-    <!--    Enter phone fragment  -->
-    <string name="enter_phone_default_ukraine_country_code" translatable="false">+380</string>
-    <string name="enter_phone_default_country_title">Country</string>
-    <string name="enter_phone_helper_text">Please select your country code and enter your phone number</string>
-    <string name="enter_phone_phone_hint_text">Phone</string>
-    <string name="enter_phone_country_hint_text">Country</string>
-    <string name="enter_phone_fab_cd">Confirm</string>
+    <!--    Login screen  -->
+    <string name="login_default_ukraine_country_code" translatable="false">+380</string>
+    <string name="login_helper_text">Please enter your phone number</string>
+    <string name="login_phone_hint_text">Phone</string>
+    <string name="login_fab_cd">Confirm</string>
+    <string name="login_number_too_short_message">Phone number too short</string>
 
     <!--    Edit name fragment  -->
     <string name="edit_name_fab_cd">Confirm</string>
     <string name="edit_name_first_name_hint_text">First name (required)</string>
     <string name="edit_name_last_name_hint_text">Last name (optional)</string>
-    <string name="edit_name_name_updated_message">Name updated</string>
     <string name="edit_name_name_required_message">First name is required</string>
 
-
-    <!--    Edit username fragment  -->
+    <!--    Edit username screen  -->
     <string name="username_placeholder" translatable="false">\@%1$s</string>
     <string name="edit_username_fab_cd">Confirm</string>
-    <string name="edit_username_helper_text">You can choose a username on Uwugram.         If you do, people will be able to find you by this username and contact         you without needing your phone number.  You can use cymbols a–z, 0–9 and         underscores. Minimum length is 5 characters.</string>
+    <string name="edit_username_hint_text">Username</string>
+    <string name="edit_username_helper_text">You can choose a username on Uwugram. If you do, people will be able to find you by this username and contact you without needing your phone number. You can use cymbols a–z, 0–9 and underscores. Minimum length is 5 characters.</string>
     <string name="edit_username_username_taken_message">Sorry this username already taken</string>
     <string name="edit_username_name_required_message">Username is required</string>
     <string name="edit_username_na_symbols_message">Username contains not allowed symbols</string>
-    <string name="edit_username_name_updated_message">Username updated</string>
-    <string name="enter_phone_number_too_short_message">Phone number too short</string>
 
-    <!--    Bio fragment    -->
+    <!--    Bio screen    -->
+    <string name="edit_bio_fab_cd">Confirm</string>
     <string name="edit_bio_hint_text">Bio</string>
     <string name="edit_bio_helper_text">You can add a few lines about yourself. Anyone who opens your profile will see this text.</string>
-    <string name="edit_bio_activity_title">Bio</string>
-    <string name="edit_bio_updated_message">Bio updated</string>
     <string name="edit_bio_required_message">Bio required</string>
 
     <!--    Drawer items    -->
+    <string name="drawer_photo_cd">Photo</string>
     <string name="drawer_item_new_group">New Group</string>
     <string name="drawer_item_contacts">Contacts</string>
     <string name="drawer_item_calls">Calls</string>
@@ -77,11 +72,19 @@
     <string name="drawer_item_invite_friends">Invite friends</string>
     <string name="drawer_item_faq" translatable="false">FAQ</string>
 
-    <!--  Chat fragment  -->
-    <string name="input_message_hint">Type message</string>
-    <string name="send_message_button_cd">Send message button</string>
+    <!--  Chats screen  -->
+    <string name="input_message_hint">Message</string>
+    <string name="contacts_access_rationale">To find people to communicate app needs contacts access. Please grant the permission</string>
+    <string name="contacts_access_button_text">Request permission</string>
+    <string name="contacts_access_cancel_button_cd">Cancel</string>
     <string name="no_conversations_message">Still no conversations here\nTry to start a conversation in Contacts</string>
-    <string name="no_messages_message">Oh. You haven\'t written anything yet\nTry to text \'hello\' this will help to start dialogue</string>
-    <string name="no_contacts_message">Oh. So far, none of your contacts are registered in Uwugram\n Try to invite someone</string>
+    <string name="open_drawer_button_cd">Open drawer</string>
 
+    <!--  Single chat screen  -->
+    <string name="send_message_button_cd">Send message button</string>
+    <string name="no_messages_message">Oh. You haven\'t written anything yet\nTry to text \'hello\' this will help to start dialogue</string>
+    <string name="single_chant_photo_cd">Photo</string>
+
+    <!--  Contacts screen  -->
+    <string name="no_contacts_message">Oh. So far, none of your contacts are registered in Uwugram\n Try to invite someone</string>
 </resources>
