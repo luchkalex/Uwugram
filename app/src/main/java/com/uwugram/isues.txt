@@ -1,0 +1,34 @@
+-- на маленьком xiaomi drawer очень большие меню айтемы
+
+что если передать изначально в клас бд карент диалог айди
+
+-- контакты старые в новом телефоне те ктороые есть изменяется имя которых нет остается имя старого телефона в чатах остается имя старого телефона
+
+TRANSLATE
+-- попробуй написать с привет
+-- online offline
+
+old feat
+
+- text on code ver screen
+-- text on login scren
+-- no chats
+-- no messages
+-- no contacts
+
+
+snapbars
+-- code ver wrong code
+-- login number too short
+-- first name is required
+-- username already taken
+-- username is required
+-- username contains not allowed symbols
+-- bio required
+
+new feat
+internet connection monitoring
+online indicator
+read message indicator
+notification
+time send

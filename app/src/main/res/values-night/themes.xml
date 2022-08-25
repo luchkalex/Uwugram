@@ -1,10 +1,6 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.Uwugram.Light" parent="MaterialDrawerTheme.Light">
-        <!-- Primary brand color. -->
+    <style name="Theme.Uwugram.Light" parent="Theme.Material3.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/colorAccent</item>
     </style>
 </resources>
